@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>Api smooth-scrollbar</title>
+    <link rel="stylesheet" href="../_assets/uikit-v3.2.2/css/uikit.min.css">
+    <link rel="stylesheet" href="styles/css.css">
+  </head>
+  <body>
+    <div class="uk-container">
+      <article>
+        <h1>APIs</h1>
+        <p>In this documentation, we are using <code>Scrollbar</code> (in capitalized) to represent the constructor and
+          <code>scrollbar</code> (in lowercase) for the instance object.</p>
+        <p>在本文档中，我们使用 Scrollbar (大写)表示实例对象的类，使用Scrollbar(小写)表示实例对象。</p>
+        <h2>Table of Contents</h2>
+        <ul>
+          <li><a href="#static-methods">Static Methods</a>
+            <ul>
+              <li><a href="#scrollbarinit">Scrollbar.init()</a></li>
+              <li><a href="#scrollbarinitall">Scrollbar.initAll()</a></li>
+              <li><a href="#scrollbarhas">Scrollbar.has()</a></li>
+              <li><a href="#scrollbarget">Scrollbar.get()</a></li>
+              <li><a href="#scrollbargetall">Scrollbar.getAll()</a></li>
+              <li><a href="#scrollbardestroy">Scrollbar.destroy()</a></li>
+              <li><a href="#scrollbardestroyall">Scrollbar.destroyAll()</a></li>
+              <li><a href="#scrollbaruse">Scrollbar.use()</a></li>
+              <li><a href="#scrollbarattachstyle">Scrollbar.attachStyle()</a></li>
+              <li><a href="#scrollbardetachstyle">Scrollbar.detachStyle()</a></li>
+            </ul>
+          </li>
+          <li><a href="#instance-properties-and-methods">Instance Properties and Methods</a>
+            <ul>
+              <li><a href="#scrollbarcontainerel">scrollbar.containerEl</a></li>
+              <li><a href="#scrollbarcontentel">scrollbar.contentEl</a></li>
+              <li><a href="#scrollbaroptions">scrollbar.options</a></li>
+              <li><a href="#scrollbarsize">scrollbar.size</a></li>
+              <li><a href="#scrollbaroffset">scrollbar.offset</a></li>
+              <li><a href="#scrollbarlimit">scrollbar.limit</a></li>
+              <li><a href="#scrollbarscrollleft">scrollbar.scrollLeft</a></li>
+              <li><a href="#scrollbarscrolltop">scrollbar.scrollTop</a></li>
+              <li><a href="#scrollbartrack">scrollbar.track</a></li>
+              <li><a href="#scrollbargetsize">scrollbar.getSize()</a></li>
+              <li><a href="#scrollbarupdate">scrollbar.update()</a></li>
+              <li><a href="#scrollbarsetposition">scrollbar.setPosition()</a></li>
+              <li><a href="#scrollbarscrollto">scrollbar.scrollTo()</a></li>
+              <li><a href="#scrollbarscrollintoview">scrollbar.scrollIntoView()</a></li>
+              <li><a href="#scrollbarisvisible">scrollbar.isVisible()</a></li>
+              <li><a href="#scrollbaraddmomentum">scrollbar.addMomentum()</a></li>
+              <li><a href="#scrollbarsetmomentum">scrollbar.setMomentum()</a></li>
+              <li><a href="#scrollbarupdatepluginoptions">scrollbar.updatePluginOptions()</a></li>
+              <li><a href="#scrollbaraddlistener">scrollbar.addListener()</a></li>
+              <li><a href="#scrollbarremovelistener">scrollbar.removeListener()</a></li>
+              <li><a href="#scrollbardestroy-1">scrollbar.destroy()</a></li>
+            </ul>
+          </li>
+        </ul>
+        <h2><a id="static-methods"></a>Static Methods</h2>
+        <h2>静态方法</h2>
+        <h3><a id="scrollbarinit"></a>Scrollbar.init()</h3>
+        <div>
+          <pre>Scrollbar.init(elem, options?): Scrollbar</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elem</code></td>
+              <td>Element</td>
+              <td>The DOM element that you want to initialize scrollbar to.</td>
+            </tr>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>object</code>, <em>optional</em></td>
+              <td>Initial options.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Initializes a scrollbar on the given element and returns scrollbar instance:</p>
+        <p>在给定的元素上初始化滚动条，会返回一个滚动条实例。</p>
+        <div>
+          <pre>const scrollbar = Scrollbar.init(document.body, {
+  damping: 0.2,
+});</pre>
+        </div>
+        <h3><a id="scrollbarinitall"></a>Scrollbar.initAll()</h3>
+        <div>
+          <pre>Scrollbar.init(options?): Scrollbar[]</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>object</code>, <em>optional</em></td>
+              <td>Initial options.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Automatically init scrollbar on all elements base on the selector <code>[data-scrollbar]</code>, returns an array of scrollbars:</p>
+        <p>自动在<code>[data-scrollbar]</code> 属性的元素上，初始化滚动条，返回所有的滚动条实例。</p>
+        <div>
+          <pre>&lt;div data-scrollbar&gt; ... &lt;/div&gt;
+
+&lt;article data-scrollbar&gt; ... &lt;/article&gt;
+
+Scrollbar.initAll(); // [ SmoothScrollbar, SmoothScrollbar ]</pre>
+        </div>
+        <h3><a id="scrollbarhas"></a>Scrollbar.has()</h3>
+        <div>
+          <pre>Scrollbar.has(elem): boolean</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elem</code></td>
+              <td><code>HTMLElement</code></td>
+              <td>The DOM element that you want to check.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Checks if there is a scrollbar on given element:</p>
+        <p>检查给定的元素是否有滚动条。</p>
+        <div>
+          <pre>Scrollbar.init(document.body);
+
+Scrollbar.has(document.body); // true</pre>
+        </div>
+        <h3><a id="scrollbarget"></a>Scrollbar.get()</h3>
+        <div>
+          <pre>Scrollbar.get(elem): Scrollbar</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elem</code></td>
+              <td><code>HTMLElement</code></td>
+              <td>The DOM element that you want to check.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Gets scrollbar on the given element. If no scrollbar instance exsits, returns <code>undefined</code>:</p>
+        <p>获取给定元素上的滚动条实例，如果没有，则返回 <code>undefined</code></p>
+        <div>
+          <pre>const scrollbar = Scrollbar.init(document.body);
+
+Scrollbar.get(document.body) === scrollbar; // true
+
+Scrollbar.get(document.documentElement); // undefined</pre>
+        </div>
+        <h3><a id="scrollbargetall"></a>Scrollbar.getAll()</h3>
+        <div>
+          <pre>Scrollbar.getAll(): SmoothScrollbar[]</pre>
+        </div>
+        <p>Returns an array that contains all scrollbar instances:</p>
+        <p>返回包含所有滚动条实例的数组 。</p>
+        <div>
+          <pre>Scrollbar.getAll(); // [ SmoothScrollbar, SmoothScrollbar, ... ]</pre>
+        </div>
+        <h3><a id="scrollbardestroy"></a>Scrollbar.destroy()</h3>
+        <div>
+          <pre>Scrollbar.destroy(elem): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elem</code></td>
+              <td><code>HTMLElement</code></td>
+              <td>The DOM element that scrollbar is initialized to.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Removes scrollbar on the given element:</p>
+        <p>删除给定元素上的滚动条实例。</p>
+        <div>
+          <pre>Scrollbar.init(document.body);
+Scrollbar.has(document.body); // true
+
+Scrollbar.destroy(document.body);
+Scrollbar.has(document.body); // false</pre>
+        </div>
+        <h3><a id="scrollbardestroyall"></a>Scrollbar.destroyAll()</h3>
+        <div>
+          <pre>Scrollbar.destroyAll(): void</pre>
+        </div>
+        <p>Removes all scrollbar instances from current document.</p>
+        <p>删除当前页面所有的滚动条实例。</p>
+        <h3><a id="scrollbaruse"></a>Scrollbar.use()</h3>
+        <div>
+          <pre>Scrollbar.use(...Plugins: ScrollbarPluginClass[]): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Plugin</code></td>
+              <td><code>ScrollbarPluginClass</code></td>
+              <td>Scrollbar plugin class.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Attaches plugins to scrollbars. </p>
+        <p>给滚动条实例增加插件。</p>
+        <div>
+    <pre>import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
+import OverscrollPlugin from 'smooth-scrollbar/plugin/overscroll';
+
+class MyPlugin extends ScrollbarPlugin {
+  ...
+}
+
+Scrollbar.use(MyPlugin, OverscrollPlugin);</pre>
+        </div>
+        <h3><a id="scrollbarattachstyle"></a>Scrollbar.attachStyle()</h3>
+        <p>Attaches default style sheets to current document. You don't need to call this method manually unless you
+          removed the default styles via <code>Scrollbar.detachStyle()</code>;</p>
+          <p>给当前文档增加样式。一般情况下你不需要调用这个方法，除非你调用<code>Scrollbar.detachStyle()</code>方法删除了默认的滚动条样式。</p>
+        <h3><a id="scrollbardetachstyle"></a>Scrollbar.detachStyle()</h3>
+        <p>Removes default styles from current document. Use this method when you want to use your own css for
+          scrollbars.</p>
+          <p>删除当前页默认滚动条样式，使用自己的滚动条样式。</p>
+        <h2><a id="instance-properties-and-methods"></a>Instance Properties and Methods</h2>
+        <h2>滚动条实例的属性和方法</h2>
+        <p>A scrollbar instance is what you get from <code>Scrollbar.init()</code> method:</p>
+        <div>
+          <pre><span class="pl-k">const</span> <span class="pl-c1">scrollbar</span> <span class="pl-k">=</span> <span class="pl-smi">Scrollbar</span>.<span class="pl-en">init</span>(elem);</pre>
+        </div>
+        <h3><a id="scrollbarcontainerel"></a>scrollbar.containerEl</h3>
+        <ul>
+          <li>Type: <code>HTMLElement</code></li>
+        </ul>
+        <p>The element that you initialized scrollbar to:</p>
+        <div>
+          <pre>const scrollbar = Scrollbar.init(elem);
+
+console.log(scrollbar.containerEl === elem); // true</pre>
+        </div>
+        <h3><a id="scrollbarcontentel"></a>scrollbar.contentEl</h3>
+        <ul>
+          <li>Type: <code>HTMLElement</code></li>
+        </ul>
+        <p>The wrapper element that contains your contents:</p>
+        <div>
+          <pre>const scrollbar = Scrollbar.init(elem);
+
+console.log(scrollbar.contentEl.className); // 'scroll-content'</pre>
+        </div>
+        <h3><a id="scrollbaroptions"></a>scrollbar.options</h3>
+        <ul>
+          <li>Type: <code>ScrollbarOptions</code></li>
+        </ul>
+        <p>Options for current scrollbar instance:</p>
+        <div>
+          <pre>type ScrollbarOptions = {
+  damping: number,
+  thumbMinSize: number,
+  renderByPixels: boolean,
+  alwaysShowTracks: boolean,
+  continuousScrolling: boolean,
+  wheelEventTarget: EventTarget | null,
+  plugins: any,
+};</pre>
+        </div>
+        <h3><a id="scrollbarsize"></a>scrollbar.size</h3>
+        <ul>
+          <li>Type: <code>ScrollbarSize</code></li>
+        </ul>
+        <p>Geometry infomation for current scrollbar instance:</p>
+        <div>
+          <pre>type ScrollbarSize = {
+  container: {
+    width: number,
+    height: number,
+  },
+  content: {
+    width: number,
+    height: number,
+  },
+};</pre>
+        </div>
+        <h3><a id="scrollbaroffset"></a>scrollbar.offset</h3>
+        <ul>
+          <li>Type: <code>{ x: number, y: number }</code></li>
+        </ul>
+        <p>Current scrolling offsets:</p>
+        <div>
+          <pre>console.log(scrollbar.offset); // { x: 123, y: 456 }</pre>
+        </div>
+        <h3><a id="scrollbarlimit"></a>scrollbar.limit</h3>
+        <ul>
+          <li>Type: <code>{ x: number, y: number }</code></li>
+        </ul>
+        <p>Max-allowed scrolling offsets:</p>
+        <div>
+          <pre>console.log(scrollbar.limit); // { x: 1000, y: 1000 }</pre>
+        </div>
+        <h3><a id="scrollbarscrollleft"></a>scrollbar.scrollLeft</h3>
+        <ul>
+          <li>Type: <code>number</code></li>
+        </ul>
+        <p><strong>Gets or sets</strong> <code>scrollbar.offset.x</code>:</p>
+        <div>
+          <pre>console.log(scrollbar.scrollLeft); // 123
+console.log(scrollbar.scrollLeft === scrollbar.offset.x); // true
+
+scrollbar.scrollLeft = 1024; // setPosition(1024, offset.y);
+console.log(scrollbar.offset.x); // 1024</pre>
+        </div>
+        <h3><a id="scrollbarscrolltop"></a>scrollbar.scrollTop</h3>
+        <ul>
+          <li>Type: <code>number</code></li>
+        </ul>
+        <p><strong>Gets or sets</strong> <code>scrollbar.offset.y</code>:</p>
+        <div>
+    <pre>console.log(scrollbar.scrollTop); // 456
+console.log(scrollbar.scrollTop === scrollbar.offset.y); // true
+
+scrollbar.scrollTop = 2048; // setPosition(offset.x, 2048);
+console.log(scrollbar.offset.y); // 2048</pre>console.log(scrollbar.scrollTop); // 456
+console.log(scrollbar.scrollTop === scrollbar.offset.y); // true
+
+scrollbar.scrollTop = 2048; // setPosition(offset.x, 2048);
+console.log(scrollbar.offset.y); // 2048
+        </div>
+        <h3><a id="scrollbartrack" class="anchor" aria-hidden="true" href="#scrollbartrack"></a>scrollbar.track</h3>
+        <ul>
+          <li>Type: <code>TrackController</code></li>
+        </ul>
+        <p>Details:</p>
+        <div>
+          <pre>interface TrackController {
+  readonly xAxis: ScrollbarTrack;
+  readonly yAxis: ScrollbarTrack;
+
+  /**
+   * Updates track appearance
+   */
+  update(): void;
+
+  /**
+   * Automatically hide tracks when scrollbar is in idle state
+   */
+  autoHideOnIdle(): void;
+}
+
+interface ScrollbarTrack {
+  /**
+   * Track element
+   */
+  readonly element: HTMLElement;
+
+  readonly thumb: ScrollbarThumb;
+
+  /**
+   * Show track immediately
+   */
+  show(): void;
+
+  /**
+   * Hide track immediately
+   */
+  hide(): void;
+}
+
+interface ScrollbarThumb {
+  /**
+   * Thumb element
+   */
+  readonly element: HTMLElement;
+
+  /**
+   * Display size of the thumb
+   * will always be greater than `scrollbar.options.thumbMinSize`
+   */
+  displaySize: number;
+
+  /**
+   * Actual size of the thumb
+   */
+  realSize: number;
+
+  /**
+   * Thumb offset to the top
+   */
+  offset: number;
+}</pre>
+        </div>
+        <p>Example:</p>
+        <div>
+          <pre>scrollbar.track.update();
+scrollbar.track.xAxis.show();</pre>
+        </div>
+        <h3><a id="scrollbargetsize"></a>scrollbar.getSize()</h3>
+        <div>
+          <pre>scrollbar.getSize(): ScrollbarSize</pre>
+        </div>
+        <p>Returns the size of the scrollbar container element and the content wrapper element, it may be something
+          like this:</p>
+        <div>
+          <pre>{
+    container: {
+        width: 600,
+        height: 400
+    },
+    content: {
+        width: 1000,
+        height: 3000
+    }
+}</pre>
+        </div>
+        <h3><a id="scrollbarupdate"></a>scrollbar.update()</h3>
+        <div>
+          <pre>scrollbar.update(): void</pre>
+        </div>
+        <p>Forces scrollbar to update geometry infomation.</p>
+        <p>By default, scrollbars are automatically updated with <code>100ms</code> debounce (or <code>MutationObserver</code>
+          fires). You can call this method to force an update when you modified contents:</p>
+        <div>
+          <pre>// append some contents to the scrollbar element...
+scrollbar.contentEl.appendChild(awesome);
+
+// force an update
+scrollbar.update();</pre>
+        </div>
+        <h3><a id="scrollbarsetposition"></a>scrollbar.setPosition()</h3>
+        <div>
+          <pre>scrollbar.setPosition(x, y, options?): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>x</code></td>
+              <td><code>number</code></td>
+              <td>Scrolling offset in x-axis.</td>
+            </tr>
+            <tr>
+              <td><code>y</code></td>
+              <td><code>number</code></td>
+              <td>Scrolling offset in y-axis.</td>
+            </tr>
+            <tr>
+              <td>options</td>
+              <td><code>SetPositionOptions</code>, <em>optional</em></td>
+              <td>See details below.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Detail:</p>
+        <div>
+          <pre>type SetPositionOptions = {
+  /**
+   * Disable callback functions temporarily.
+   * When set to `true`, scrolling listener will not be invoked this time
+   */
+  withoutCallbacks: boolean,
+};</pre>
+        </div>
+        <p>Likes the <code>window.scrollTo()</code> method, you can use this method to set the scrollbar to the given
+          offset <strong>without easing</strong>:</p>
+        <div>
+          <pre>// limit = { x: 500, y: 500 }
+scrollbar.setPosition(100, 100);
+console.log(scrollbar.offset); // { x: 100, y: 100 }</pre>
+        </div>
+        <p>If the offset is out of limitation, it will be clamped:</p>
+        <div>
+          <pre>// scroll.limit = { x: 0, y: 100 }
+scrollbar.setPosition(1024, 1024);
+console.log(scrollbar.offset); // { x: 0, y: 100 }</pre>
+        </div>
+        <h3><a id="scrollbarscrollto"></a>scrollbar.scrollTo()</h3>
+        <div>
+          <pre>scrollbar.scrollTo(x, y, duration?, options?): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>x</code></td>
+              <td><code>number</code></td>
+              <td>Scrolling offset in x-axis.</td>
+            </tr>
+            <tr>
+              <td><code>y</code></td>
+              <td><code>number</code></td>
+              <td>Scrolling offset in y-axis.</td>
+            </tr>
+            <tr>
+              <td><code>duration</code></td>
+              <td><code>number</code>, <em>optional</em></td>
+              <td>Easing duration, default is <code>0</code> (non-easing).</td>
+            </tr>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>ScrollToOptions</code>, <em>optional</em></td>
+              <td>See details below.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Details:</p>
+        <div>
+          <pre>type ScrollToOptions = {
+  /**
+   * Callback function that will be invoked when easing animaiton is done
+   */
+  callback: (this: Scrollbar) => void,
+
+  /**
+   * Custom easing function, default is `easeOutCubic`.
+   * You can find more easing function on <https://github.com/danro/easing-js>
+   */
+  easing: (percent: number) => number;
+};</pre>
+        </div>
+        <p>Scrolls to given position with easing function:</p>
+        <div>
+          <pre>import easing from 'easing-js';
+
+scrollbar.scrollTo(0, 100, 600);
+scrollbar.scrollTo(0, 100, 600, {
+  callback: () => console.log('done!'),
+  easing: easing.easeOutBack,
+});</pre>
+        </div>
+        <h3><a id="scrollbarscrollintoview"></a>scrollbar.scrollIntoView()</h3>
+        <div>
+          <pre>scrollbar.scrollIntoView(elem, options?): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elem</code></td>
+              <td><code>HTMLElement</code></td>
+              <td>Target element.</td>
+            </tr>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>object</code>, <em>optional</em></td>
+              <td>See details below.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Details:</p>
+        <div>
+          <pre>type ScrollIntoViewOptions = {
+  /**
+   * Whether to align to the top or the bottom edge of container.
+   */
+  alignToTop: boolean = true,
+
+  /**
+   * Set to true to prevent scrolling when target element is visible.
+   */
+  onlyScrollIfNeeded: boolean = false,
+
+  /**
+   * Offset to left edge of container.
+   */
+  offsetLeft: number = 0,
+
+  /**
+   * Offset to top edge of container (used only if `alignToTop=true`)
+   */
+  offsetTop: number = 0,
+
+  /**
+   * Offset to bottom edge of container (used only if `alignToTop=false`).
+   */
+  offsetBottom: number = 0,
+};</pre>
+  </div>
+  <p>Scrolls the target element into visible area of scrollbar, likes DOM method <code>element.scrollIntoView()</code>. This method will be helpful when you want to
+    create some anchors.</p>
+  <div>
+    <pre>scrollbar.scrollIntoView(document.querySelector('#anchor'), {
+  offsetLeft: 34,
+  offsetBottom: 12,
+  alignToTop: false,
+  onlyScrollIfNeeded: true,
+});</pre>
+        </div>
+        <h3><a id="scrollbarisvisible"></a>scrollbar.isVisible()</h3>
+        <div>
+          <pre>scrollbar.isVisible(elem): boolean</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>elem</code></td>
+              <td><code>HTMLElement</code></td>
+              <td>Target element.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Checks if an element is visible in the current view area.</p>
+        <div>
+          <pre>scrollbar.isVisible(document.querySelector('#greet'));</pre>
+        </div>
+        <h3><a id="scrollbaraddmomentum"></a>scrollbar.addMomentum()</h3>
+        <div>
+          <pre>scrollbar.addMomentum(x, y): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>x</code></td>
+              <td><code>number</code></td>
+              <td>Momentum in x-axis.</td>
+            </tr>
+            <tr>
+              <td><code>y</code></td>
+              <td><code>number</code></td>
+              <td>Momentum in y-axis.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Increases scrollbar's momentum. This method will <strong>NOT</strong> fire <code>plugin.trasformDelta()</code>
+          hook.</p>
+        <div>
+          <pre>scrollbar.addMomentum(100, 100);</pre>
+        </div>
+        <h3><a id="scrollbarsetmomentum"></a>scrollbar.setMomentum()</h3>
+        <div>
+          <pre>scrollbar.setMomentum(x, y): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>x</code></td>
+              <td><code>number</code></td>
+              <td>Momentum in x-axis.</td>
+            </tr>
+            <tr>
+              <td><code>y</code></td>
+              <td><code>number</code></td>
+              <td>Momentum in y-axis.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Sets scrollbar's momentum to given value. This method will <strong>NOT</strong> fire <code>plugin.trasformDelta()</code>
+          hook.</p>
+        <div>
+          <pre>scrollbar.setMomentum(100, 100);</pre>
+        </div>
+        <h3><a id="scrollbarupdatepluginoptions"></a>scrollbar.updatePluginOptions()</h3>
+        <blockquote>
+          <p>This method is available since <code>8.1.0</code>.</p>
+        </blockquote>
+        <div>
+          <pre>scrollbar.updatePluginOptions(pluginName, options): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>pluginName</code></td>
+              <td><code>string</code></td>
+              <td>Name of the plugin.</td>
+            </tr>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>object</code></td>
+              <td>An object includes the properties that you want to update.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Updates options for specific plugin.</p>
+        <div>
+          <pre>scrollbar.updatePluginOptions('overscroll', {
+  effect: 'glow',
+});</pre>
+        </div>
+        <h3><a id="scrollbaraddlistener"></a>scrollbar.addListener()</h3>
+        <div>
+          <pre>scrollbar.addListener(listener): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>listener</code></td>
+              <td><code>ScrollListener</code></td>
+              <td>Scrolling event listener, see details below.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Details:</p>
+        <div>
+          <pre>interface ScrollListener {
+  (this: Scrollbar, status: ScrollStatus): void;
+}
+
+type ScrollStatus = {
+  // equal to `scrollbar.offset`
+  offset: {
+    x: number,
+    y: number,
+  },
+  // equal to `scrollbar.limit`
+  limit: {
+    x: number,
+    y: number,
+  },
+};</pre>
+        </div>
+        <p>Since scrollbars will not fire a native <code>scroll</code> event, we need to registers scrolling listeners
+          through <code>scrollbar.addListener()</code> method.</p>
+        <blockquote>
+          <p><strong>Notice</strong>: the callback functions will be invoked in every small scrolling, so be careful
+            not to add time-consuming listeners which will slow down scrolling.</p>
+        </blockquote>
+        <div>
+          <pre>scrollbar.addListener((status) => {
+  ...
+});</pre>
+        </div>
+        <h3><a id="scrollbarremovelistener"></a>scrollbar.removeListener()</h3>
+        <div>
+          <pre>scrollbar.removeListener(listener): void</pre>
+        </div>
+        <table class="uk-table my-table">
+          <thead>
+            <tr>
+              <th>Param</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>listener</code></td>
+              <td><code>ScrollListener</code></td>
+              <td>The registered listener function.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Removes listener previously registered with <code>scrollbar.addListener()</code>, just likes the DOM method <code>EventTarget.removeEventListener()</code>.</p>
+        <div>
+          <pre>function listener(status) {
+  // ...
+}
+
+scrollbar.addListener(listener);
+scrollbar.removeListener(listener);</pre>
+        </div>
+        <h3><a id="scrollbardestroy-1"></a>scrollbar.destroy()</h3>
+        <div>
+          <pre>scrollbar.destroy(): void</pre>
+        </div>
+        <p>Removes this scrollbar instance and restores （还原） DOM:</p>
+        <p>Before:</p>
+        <div>
+          <pre>&lt;section data-scrollbar style=&quot;overflow: hidden&quot;&gt;
+  &lt;div class=&quot;scroll-content&quot;&gt;
+    ...
+  &lt;/div&gt;
+
+  &lt;div class=&quot;scrollbar-track scrollbar-track-x&quot;&gt;
+    &lt;div class=&quot;scrollbar-thumb scrollbar-thumb-x&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;scrollbar-track scrollbar-track-y&quot;&gt;
+    &lt;div class=&quot;scrollbar-thumb scrollbar-thumb-y&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+        </div>
+        <p>After:</p>
+        <div>
+          <pre>&lt;section data-scrollbar&gt;
+  ...
+&lt;/section&gt;</pre>
+        </div>
+      </article>
+    </div>
+    <script>
+
+    </script>
+  </body>
+</html>

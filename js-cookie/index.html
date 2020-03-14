@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>js-cookie</title>
+    <link rel="stylesheet" type="text/css" href="../_assets/uikit-v3.2.2/css/uikit.min.css"/>
+  </head>
+  <body>
+    <div class="uk-container">
+      <h2>Basic Usage</h2>
+      <h3>Create a cookie, valid across the entire site（整个站点有效）:</h3>
+      <pre>Cookies.set('name', 'value')</pre>
+      <h3>Create a cookie that expires 7 days from now, valid across the entire site:</h3>
+      <pre>Cookies.set('name', 'value', { expires: 7 })</pre>
+      <h3>Create an expiring cookie, valid to the path of the current page:</h3>
+      <pre>Cookies.set('name', 'value', { expires: 7, path: '' })</pre>
+      <h3>Read cookie:</h3>
+      <pre>Cookies.get('name') // => 'value'
+Cookies.get('nothing') // => undefined</pre>
+      <h3>Read all visible cookies:</h3>
+      <pre>Cookies.get() // => { name: 'value' }</pre>
+      <p>Note: It is not possible to read a particular cookie by passing one of the cookie attributes (which may or may not have been used when writing the cookie in question):</p>
+      <pre>Cookies.get('foo', { domain: 'sub.example.com' }) // `domain` won't have any effect...!</pre>
+      <p>The cookie with the name foo will only be available on .get() if it's visible from where the code is called; the domain and/or path attribute will not have an effect when reading.</p>
+      <h3>Delete cookie:</h3>
+      <pre>Cookies.remove('name')</pre>
+      <h3>Delete a cookie valid to the path of the current page:</h3>
+      <pre>Cookies.set('name', 'value', { path: '' })
+Cookies.remove('name') // fail!
+Cookies.remove('name', { path: '' }) // removed!</pre>
+      <p>IMPORTANT! When deleting a cookie and you're not relying on the default attributes, you must pass the exact same path and domain attributes that were used to set the cookie:</p>
+      <pre>Cookies.remove('name', { path: '', domain: '.yourdomain.com' })</pre>
+      <p>Note: Removing a nonexistent cookie neither raises any exception nor returns any value.</p>
+      <h2>Namespace conflicts</h2>
+      <p>If there is any danger of a conflict with the namespace Cookies, the noConflict method will allow you to define a new namespace and preserve the original one. This is especially useful when running the script on third party sites e.g. as part of a widget or SDK.</p>
+      <pre>// Assign the js-cookie api to a different variable and restore the original "window.Cookies"
+var Cookies2 = Cookies.noConflict()
+Cookies2.set('name', 'value')</pre>
+      <h2>Cookie Attributes</h2>
+      <p>Cookie attributes defaults can be set globally by setting properties of the Cookies.defaults object or individually for each call to Cookies.set(...) by passing a plain object in the last argument. Per-call attributes override the default attributes.</p>
+      <h3>expires</h3>
+      <p>Define when the cookie will be removed. Value can be a Number which will be interpreted as days from time of creation or a Date instance. If omitted, the cookie becomes a session cookie.</p>
+      <p>Default: Cookie is removed when the user closes the browser.</p>
+      <pre>Cookies.set('name', 'value', { expires: 365 })
+Cookies.get('name') // => 'value'
+Cookies.remove('name')</pre>
+      <h3>path</h3>
+      <p>A String indicating the path where the cookie is visible.</p>
+      <p>Default: /</p>
+      <pre>Cookies.set('name', 'value', { path: '' })
+Cookies.get('name') // => 'value'
+Cookies.remove('name', { path: '' })</pre>
+      <h3>domain</h3>
+      <p>A String indicating a valid domain where the cookie should be visible. The cookie will also be visible to all subdomains.</p>
+      <p>Default: Cookie is visible only to the domain or subdomain of the page where the cookie was created, except for Internet Explorer (see below).</p>
+      <p>Assuming a cookie that is being created on site.com:</p>
+      <pre>Cookies.set('name', 'value', { domain: 'subdomain.site.com' })
+Cookies.get('name') // => undefined (need to read at 'subdomain.site.com')</pre>
+      <h3>secure</h3>
+      <p>Either true or false, indicating if the cookie transmission requires a secure protocol (https).</p>
+      <p>Default: No secure protocol requirement.</p>
+      <pre>Cookies.set('name', 'value', { secure: true })
+Cookies.get('name') // => 'value'
+Cookies.remove('name')</pre>
+      <h3>sameSite</h3>
+      <p>A String, with possible values lax or strict, prevents the browser from sending cookie along with cross-site requests.</p>
+      <p>Default: not set, i.e. include cookie in any request.</p>
+      <pre>Cookies.set('name', 'value', { sameSite: 'lax' })
+Cookies.get('name') // => 'value'
+Cookies.remove('name')</pre>
+    </div>
+    <script>
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <title>smooth-scrollbar</title>
+  <link rel="stylesheet" href="../_assets/uikit-v3.2.2/css/uikit.min.css" />
+  <link rel="stylesheet" href="styles/css.css">
+</head>
+
+<body>
+  <div class="uk-container">
+    <article id="content">
+      <h2>What is smooth-scrollbar? </h2>
+      <h2>smooth-scrollbar 是什么？</h2>
+      <p>Smooth Scrollbar is a JavaScript Plugin that allows you customizing high perfermance scrollbars cross
+        browsers. It is using <code>translate3d</code> to perform a momentum based scrolling (aka inertial scrolling)
+        on modern browsers. With the flexible <a href="./plugins.html">plugin
+        system</a>, we can easily redesign the scrollbar as we want. This is the scrollbar plugin that you've ever
+      dreamed of!</p>
+      <p>smooth-scrollbar 是一个JavaScript插件，可以用来自定义高性能的、跨浏览器的滚动条。它使用 CSS3 的 translate3d 属性，在现代浏览器上执行基于动量滚动（又名惯性滚动）。搭配可扩展的插件系统，我们可以轻松定制我们需要的滚动条。这是我们梦寐以求的滚动条插件。</p>
+      <h2>Installation</h2>
+      <h2>安装</h2>
+      <p>Via NPM <strong>(recommended)</strong>: </p>
+      <p>通过 vpn 命令行安装：</p>
+      <div>
+        <pre><code>npm install smooth-scrollbar --save</code></pre>
+      </div>
+      <p>Via Bower: </p>
+      <p>通过 Bower 安装：</p>
+      <div>
+        <pre><code>bower install smooth-scrollbar --save</code></pre>
+      </div>
+      <h2>Browser Compatibility </h2>
+      <h2>浏览器兼容性</h2>
+      <table class="uk-table uk-table-divider uk-table-striped uk-table-hover my-table" style="width: 400px;">
+        <thead>
+          <tr>
+            <th class="uk-width-1-2">Browser</th>
+            <th>Version</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IE</td>
+            <td>10+</td>
+          </tr>
+          <tr>
+            <td>Chrome</td>
+            <td>22+</td>
+          </tr>
+          <tr>
+            <td>Firefox</td>
+            <td>16+</td>
+          </tr>
+          <tr>
+            <td>Safari</td>
+            <td>8+</td>
+          </tr>
+          <tr>
+            <td>Android Browser</td>
+            <td>4+</td>
+          </tr>
+          <tr>
+            <td>Chrome for Android</td>
+            <td>32+</td>
+          </tr>
+          <tr>
+            <td>iOS Safari</td>
+            <td>7+</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Usage</h2>
+      <div>
+        <pre><code>import Scrollbar from 'smooth-scrollbar';
+
+Scrollbar.init(document.querySelector('#my-scrollbar'), options);</code></pre>
+      </div>
+      <p>If you are not using any bundlers, you can just load the UMD bundle:</p>
+      <div>
+        <pre><code>&lt;script src="dist/smooth-scrollbar.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var Scrollbar = window.Scrollbar;
+  Scrollbar.init(document.querySelector('#my-scrollbar'), options);
+&lt;/script&gt;</code></pre>
+      </div>
+      <h2>Common mistakes</h2>
+      <h4>Initialize a scrollbar without a limited width or height</h4>
+      <h4>初始化时，没有限制宽度或高度</h4>
+      <p>Likes the native scrollbars, a scrollable area means <strong>the content insides it is larger than the
+      container itself</strong>, for example, a <code>500*500</code> area with a content which size is <code>1000*1000</code>:</p>
+      <div>
+        <pre><code>          container
+            /
+       +--------+
+  #####################
+  #    |        |     #
+  #    |        |     #
+  #    +--------+     # -- content
+  #                   #
+  #                   #
+  #####################</code></pre>
+      </div>
+      <p>Therefore, it's necessary to set the <code>width</code> or <code>height</code> for the container element:</p>
+      <p>因此，给container元素设置一个宽度或高度属性是必要的。</p>
+      <div>
+        <pre class="  language-css"><code class="  language-css"><span class="token selector">#my-scrollbar {
+  width: 500px;
+  height: 500px;
+  overflow: auto;
+}</code></pre>
+      </div>
+      <p>If the container element is natively scrollable before initializing the Scrollbar, it means you are on the
+      correct way.</p>
+      <p>如果container元素在初始化前就可以使用浏览器默认的滚动条，就意味着这是正确的方式。</p>
+      <h2>Available Options for Scrollbar</h2>
+      <h2>滚动条可配置的属性</h2>
+      <table id="options" class="uk-table uk-table-divider uk-table-striped uk-table-hover my-table">
+        <thead>
+          <tr>
+            <th>parameter</th>
+            <th>type</th>
+            <th>default</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>damping</td>
+            <td><code>number</code></td>
+            <td><code>0.1</code></td>
+            <td>Momentum reduction damping factor, a float value between <code>(0, 1)</code>,
+            the lower the value is, the more smooth the scrolling will be (also the more paint frames).<br/>
+            动量减少阻尼系数，浮点值类型，在 0~1 之间，数值越小，滚动越平滑，性能消耗越大。
+          </td>
+          </tr>
+          <tr>
+            <td>thumbMinSize</td>
+            <td><code>number</code></td>
+            <td><code>20</code></td>
+            <td>Minimal size for scrollbar thumbs.<br/>
+              滚动条的最小尺寸。
+            </td>
+          </tr>
+          <tr>
+            <td>renderByPixels</td>
+            <td><code>boolean</code></td>
+            <td><code>true</code></td>
+            <td>Render every frame in integer pixel values, set to <code>true</code> to
+            improve scrolling performance.</td>
+          </tr>
+          <tr>
+            <td>alwaysShowTracks</td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Keep scrollbar tracks always visible.<br/>
+              保持滚动区域始终可见。
+            </td>
+          </tr>
+          <tr>
+            <td>continuousScrolling</td>
+            <td><code>boolean</code></td>
+            <td><code>true</code></td>
+            <td>Set to <code>true</code> to allow outer scrollbars continue scrolling when
+            current scrollbar reaches edge.<br/>
+            当滚动条到底边界时，是否允许外部滚动条继续滚动。
+          </td>
+          </tr>
+          <tr>
+            <td>wheelEventTarget</td>
+            <td><code>EventTarget</code></td>
+            <td><code>null</code></td>
+            <td>Element to be used as a listener for mouse wheel scroll events. By default,
+            the container element is used. This option will be useful for dealing with fixed elements.</td>
+          </tr>
+          <tr>
+            <td>plugins</td>
+            <td><code>object</code></td>
+            <td><code>{}</code></td>
+            <td>Options for plugins, see <a href="plugins.html">Plugin
+            System</a>.</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>DOM Structure</h2>
+      <h2>DOM 结构</h2>
+      <p>The following is the DOM structure that Scrollbar yields:</p>
+      <div>
+        <pre><code>&lt;scrollbar&gt;
+  &lt;div class="scroll-content"&gt;
+    your contents here...
+  &lt;/div&gt;
+  &lt;div class="scrollbar-track scrollbar-track-x"&gt;
+    &lt;div class="scrollbar-thumb scrollbar-thumb-x"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="scrollbar-track scrollbar-track-y"&gt;
+    &lt;div class="scrollbar-thumb scrollbar-thumb-y"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/scrollbar&gt;</code></pre>
+      </div>
+      <h2>Next Step...</h2>
+      <h2>下一步</h2>
+      <p>查看 <a href="api.html">API documentation</a></p>
+    </article>
+  </div>
+</body>
+
+</html>

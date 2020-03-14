@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>video.js 视频播放</title>
+    <link rel="stylesheet" type="text/css" href="../_assets/uikit-v3.2.2/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/video-js/v7.6.4/video-js.css">
+    <link rel="stylesheet" href="./lib/video-js/v7.6.4/plugins/titleBar/title-bar.css">
+    <style>
+      .video-wraper {
+        margin-top: 16px;
+        width: 640px;
+        height: 400px;
+        background: #000;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="uk-container">
+      <div class="video-wraper">
+        <video id="my-video" class="video-js vjs-big-play-centered">
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div>
+    </div>
+    <script src="../_assets/jquery/v3.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/video-js/v7.6.4/video.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/video-js/v7.6.4/lang/zh-CN.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/video-js/v7.6.4/plugins/titleBar/title-bar.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      var options = {
+        autoplay: true,
+        loop: true,
+        controls: "control",
+        preload: true,
+        width: 640,
+        height: 400,
+        poster: "./image/oceans.png",
+        nativeControlsForTouch: false,
+        sources: [{
+          src: "//player.alicdn.com/video/editor.mp4",
+          type: "video/mp4"
+        }],
+        playbackRates: [0.8,1,1.25,1.5,2],
+      };
+      $(function() {
+        var player = videojs("my-video", options);
+        player.addChild("TitleBar", {
+          text: "这里是标题123"
+        });
+      })
+    </script>
+  </body>
+
+</html>

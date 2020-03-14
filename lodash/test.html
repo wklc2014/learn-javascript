@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>lodash test</title>
+    <script src="./lib/lodash/v4.17.15/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+var users = [
+  {
+    "questionType": "CHECK",
+    "score": 1,
+  },
+  {
+    "questionType": "SINGLE",
+    "score": 4,
+  },
+  {
+    "questionType": "MULTIPLE",
+    "score": 3,
+  },
+  {
+    "questionType": "CHECK",
+    "score": 6,
+  },
+  {
+    "questionType": "SINGLE",
+    "score": 5,
+  },
+  {
+    "questionType": "MULTIPLE",
+    "score": 2,
+  },
+];
+var a = _.orderBy(users, 'questionType', 'desc')
+console.log('a>>>', a)
+    </script>
+  </body>
+</html>

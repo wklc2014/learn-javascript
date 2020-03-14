@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Fluid Player</title>
+    <link rel="stylesheet" href="./lib/fluidplayer/v2.4.10/fluidplayer.css" type="text/css" />
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .player-box {
+        width: 100%;
+        min-width: 300px;
+        max-width: 640px;
+        height: 400px;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="player-box">
+      <video id="video-id" controls style="width: 100%; height: 100%;">
+        <source src="//player.alicdn.com/video/editor.mp4" type="video/mp4" title="视频 A" />
+      </video>
+    </div>
+    <script src="./lib/fluidplayer/v2.4.10/fluidplayer.js"></script>
+    <script>
+      var player = fluidPlayer("video-id", {
+        layoutControls: {
+          // fillToContainer: true,
+          playbackRateEnabled: true,
+          allowTheatre: false,
+          // autoPlay: true,
+          posterImage: './assets/pic.jpg',
+        }
+      });
+      // var videoPlayerTag = document.getElementById(player.videoPlayerId);
+      // videoPlayerTag.addEventListener('timeupdate', function () {
+      //   console.log(this.currentTime);
+      // });
+    </script>
+  </body>
+</html>

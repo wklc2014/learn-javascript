@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>Plugins smooth-scrollbar</title>
+    <link rel="stylesheet" href="../_assets/uikit-v3.2.2/css/uikit.min.css" />
+    <link rel="stylesheet" href="styles/css.css">
+</head>
+
+<body>
+    <div class="uk-container">
+        <article>
+            <h1>Plugin System</h1>
+            <blockquote>
+                <p>This is the API documentation for <code>smooth-scrollbar@8.x</code>, check <a href="https://github.com/idiotWu/smooth-scrollbar/tree/7.x">here</a> for the docs of version 7.x.</p>
+            </blockquote>
+            <blockquote>
+                <p>Looking for migration guides? See <a href="/idiotWu/smooth-scrollbar/blob/3cb3c94f2f812509f30cb1d7796254213ee0a8ce/docs/migration.md">migration guide</a> for details.</p>
+            </blockquote>
+            <p>The most exciting feature in v8 is the plugin system. The following section explains the lifecycle of a scrollbar the mechanism inside plugins.</p>
+            <p>版本8.0中最大的特性就是插件系统，下面的章节将介绍插件内部机制的滚动条生命周期。</p>
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#the-scrollbar-lifecycle">The Scrollbar Lifecycle</a></li>
+                <li><a href="#plugin-system">Plugin System</a>
+                    <ul>
+                        <li><a href="#oninit">onInit()</a></li>
+                        <li><a href="#onupdate">onUpdate()</a></li>
+                        <li><a href="#transformdelta">transformDelta()</a></li>
+                        <li><a href="#onrender">onRender()</a></li>
+                        <li><a href="#ondestroy">onDestroy()</a></li>
+                    </ul>
+                </li>
+                <li><a href="#plugin-options">Plugin Options</a>
+                    <ul>
+                        <li><a href="#update-plugin-options">Update Plugin Options</a></li>
+                    </ul>
+                </li>
+                <li><a href="#disable-specific-plugins">Disable Specific Plugins</a></li>
+                <li><a href="#plugin-order">Plugin Order</a></li>
+                <li><a href="#example-invert-delta">Example: invert delta</a></li>
+            </ul>
+            <h2><a id="the-scrollbar-lifecycle"></a>The Scrollbar Lifecycle</h2>
+            <p>The following animation demonstrates the lifecycle of a scrollbar instance:</p>
+            <p>下面的动画演示了一个滚动条实例的生命周期。</p>
+            <p><img src="./images/diagram.gif" alt="diagram" style="max-width:100%;"></a></p>
+            <ol>
+                <li>a DOM event called, and</li>
+                <li>the event wants to change the momentum of scrollbar,</li>
+                <li>delta values are sent to <code>transformDelta</code> hooks,</li>
+                <li>transformed delta values are applied to scrollbar, and caused scrolling position to change,</li>
+                <li>new position rendered, sends the remain momentum to <code>onRender</code> hooks.</li>
+            </ol>
+            <h2><a id="plugin-system-1"></a>Plugin System</h2>
+            <p>Typings overview:</p>
+            <div>
+                <pre>type Data2d = {
+    x: number,
+    y: number,
+  }
+
+abstract class ScrollbarPlugin {
+  static pluginName: string;
+  static defaultOptions: object;
+
+  readonly scrollbar: Scrollbar;
+  readonly options: any;
+
+  onInit(): void;
+
+  onUpdate(): void;
+
+  transformDelta(delta: Data2d, fromEvent: any): Data2d;
+
+  onRender(remainMomentum: Data2d): void;
+
+  onDestroy(): void;
+}</pre>
+            </div>
+            <p><code>ScrollbarPlugin</code> is an abstract class so you can't use it directly with <code>Scrollbar</code>. Normally you would subclass it with at least a <code>pluginName</code> property:</p>
+            <div>
+                <pre>import { ScrollbarPlugin } from 'smooth-scrollbar';
+
+class MyPlugin extends ScrollbarPlugin {
+  static pluginName = 'myPlugin';
+}</pre>
+            </div>
+            <p><code>pluginName</code> property will be used to obtain plugin options later.</p>
+            <p>Each plugin has several hooks that bring you into the scrollbar lifecycle.</p>
+            <h3><a id="oninit"></a>onInit()</h3>
+            <div>
+                <pre>class MyPlugin extends ScrollbarPlugin {
+  static pluginName = 'myPlugin';
+
+  onInit() {
+    console.log('hello world!');
+
+    this._mount();
+  }
+}</pre>
+            </div>
+            <p><code>onInit()</code> is invoked right <strong>after</strong> a scrollbar instance is constructed. You can do some initialization here.</p>
+            <h3><a id="onupdate"></a>onUpdate()</h3>
+            <div>
+                <pre>class MyPlugin extends ScrollbarPlugin {
+  static pluginName = 'myPlugin';
+
+  onUpdate() {
+    console.log('scrollbar updated');
+
+    this._update();
+  }
+}</pre>
+            </div>
+            <p><code>onUpdate()</code> is invoked <strong>after</strong> scrollbar is updated (ie <code>scrollbar.update()</code> method called). It may be a good time to update your plugin itself :).</p>
+            <h3><a id="transformdelta"></a>transformDelta()</h3>
+            <div>
+                <pre>type Delta = {
+  x: number,
+  y: number,
+};
+
+class MyPlugin extends ScrollbarPlugin {
+  static pluginName = 'myPlugin';
+
+  transformDelta(delta: Delta, fromEvent: Event): Delta {
+    return {
+      x: delta.x * 2,
+      y: delta.y * 2,
+    };
+  }
+}</pre>
+            </div>
+            <p><code>transformDelta()</code> is the most powerful method in plugin system. Let's say every scrolling is caused by a DOM event. Whenever an event called, it will update the momentum of scrollbar by a <code>Delta</code>.</p>
+            <p>So this hook will be invoked <strong>immediately after DOM event occurs, and before the final <code>Delta</code> is applied to scrollbar</strong>. <code>transformDelta()</code> offers a possibility to break the default mechanism so you can almost do any thing from simple delta scaling to overscroll effect! And all you need is to analyze the delta value then return a new delta to the lifecycle.</p>
+            <h3><a id="onrender"></a>onRender()</h3>
+            <div>
+                <pre>type Momentum = {
+  x: number,
+  y: number,
+};
+
+class MyPlugin extends ScrollbarPlugin {
+  static pluginName = 'myPlugin';
+
+  onRender(remainMomentum: Momentum) {
+    this._remain = {
+      ...remainMomentum,
+    };
+
+    this.scrollbar.setMomentum(0, 0);
+    this._render();
+  }
+}</pre>
+            </div>
+            <p><code>onRender()</code> hook is invoked everytime render loop runs. You will be informed of the remain momentum of the scrollbar. Through the <code>scrollbar.addMomentum()</code> and <code>scrollbar.setMomentum()</code> method, this is the last chance to modify the momentum in a lifecycle.</p>
+            <p>Scrollbar is render in a <code>requestAnimationFrame</code> loop, so <strong>DO NOT</strong> perform any heavy operation in this hook, otherwise you might block the whole UI of your poor browser.</p>
+            <h3><a id="ondestroy"></a>onDestroy()</h3>
+            <div>
+                <pre>class MyPlugin extends ScrollbarPlugin {
+  static pluginName = 'myPlugin';
+
+  onDestroy() {
+    console.log('goodbye');
+    this._unmount();
+  }
+}</pre>
+            </div>
+            <p>As the name shows, <code>onDestroy()</code> will be called <strong>after</strong> a scrollbar instance is destroyed, so you should do some cleaning jobs here.</p>
+            <h2><a id="plugin-options"></a>Plugin Options</h2>
+            <p>Your lovely <code>pluginName</code> property is the only tunnel that connects your plugin and users. For example, suppose that we have a plugin named <code>meow</code>:</p>
+            <div>
+                <pre>class MeowPlugin extends ScrollbarPlugin {
+  static pluginName = 'meow';
+
+  onInit() {
+    console.log('meow', this.options);
+  }
+}</pre>
+            </div>
+            <p>When someone wants to use the <code>MeowPlugin</code>, he or she needs:</p>
+            <div>
+                <pre>import Scrollbar from 'smooth-scrollbar';
+import MeowPlugin from 'meow-plugin';
+
+Scrollbar.use(MeowPlugin);
+
+Scrollbar.init(elem, {
+  plugins: {
+    meow: {
+      age: '10m',
+    },
+  },
+});
+
+// > 'meow' { age: '10m' }</pre>
+            </div>
+            <p>You can provide default options through <code>defaultOptions</code> property:</p>
+            <div>
+                <pre>class MeowPlugin extends ScrollbarPlugin {
+  static pluginName = 'meow';
+
+  static defaultOptions = {
+    age: '0d',
+  };
+}</pre>
+            </div>
+            <h3><a id="update-plugin-options"></a>Update Plugin Options</h3>
+            <p>Plugin options is a read-only object, so you should avoid the following operation:</p>
+            <div>
+                <pre>// ❌ wrong
+scrollbar.options.plugins = {
+  overscroll: {
+    effect: 'glow',
+  },
+};</pre>
+            </div>
+            <p>Instead, you can update plugin options through <code>scrollbar.updatePluginOptions</code> API (available since <code>8.1.0</code>):</p>
+            <div>
+                <pre>scrollbar.updatePluginOptions('overscroll', {
+  effect: 'glow',
+});</pre>
+            </div>
+            <h2><a id="disable-specific-plugins"></a>Disable Specific Plugins</h2>
+            <p>If you want to disable the plugin, simply set <code>plugin[pluginName]=false</code>:</p>
+            <div>
+                <pre>Scrollbar.init(devil, {
+  plugins: {
+    meow: false,
+  },
+});
+
+// MeowPlugin will NEVER be constructed on this scrollbar instance!</pre>
+            </div>
+            <h2><a id="plugin-order"></a>Plugin Order</h2>
+            <p>Scrollbar plugins are invoked from left to right (FIFO):</p>
+            <div>
+                <pre>Scrollbar.use(PluginA, PluginB, PluginC);
+
+// hooks executing order:
+//  PluginA.transformDelta() -> PluginA.transformDelta() -> PluginC.transformDelta()</pre>
+            </div>
+            <p>Let's say we have multiple plugins:</p>
+            <div>
+                <pre>class ScaleDeltaPlugin extends ScrollbarPlugin {
+  static pluginName = 'scaleDelta';
+
+  transformDelta(delta, fromEvent) {
+    return {
+      x: delta.x * 2,
+      y: delta.y * 2,
+    }
+  }
+}
+
+class NoopPlugin extends ScrollbarPlugin {
+  static pluginName = 'noop';
+
+  transformDelta(delta, fromEvent) {
+    console.log(delta);
+    return { ...delta };
+  }
+}</pre>
+            </div>
+            <p>Now let's apply <code>delta = { x: 100, y: 100 }</code> to the scrollbar:</p>
+            <div>
+                <pre>Scrollbar.use(ScaleDeltaPlugin, NoopPlugin);
+
+// apply delta...
+
+// > { x: 200, y: 200 }</pre>
+            </div>
+            <p>Delta is first transformed by <code>ScaleDeltaPlugin</code> and then the <code>NoopPlugin</code>. What if we change the order?</p>
+            <div>
+                <pre>Scrollbar.use(NoopPlugin, ScaleDeltaPlugin);
+
+// apply delta...
+
+// > { x: 100, y: 100 }</pre>
+            </div>
+            <p>Ah, <code>NoopPlugin</code> is invoked first.</p>
+            <p>As the above section demonstrated, if you are using multiple plugins, be care of the loading order! Usually plugins like <code>OverscrollPlugin</code> that will change the layout are supposed to be the last man:</p>
+            <div>
+                <pre>Scrollbar.use(PluginA, PluginB, PluginC, ..., OverscrollPlugin);</pre>
+            </div>
+            <h3><a id="example-invert-delta"></a>Example: invert delta</h3>
+            <p>This plugin allows you to invert delta for particular events.</p>
+            <div>
+                <pre>import Scrollbar, { ScrollbarPlugin } from 'smooth-scrollbar';
+
+class InvertDeltaPlugin extends ScrollbarPlugin {
+  static pluginName = 'invertDelta';
+
+  static defaultOptions = {
+    events: [],
+  };
+
+  transformDelta(delta, fromEvent) {
+    if (this.shouldInvertDelta(fromEvent)) {
+      return {
+        x: delta.y,
+        y: delta.x,
+      };
+    }
+
+    return delta;
+  }
+
+  shouldInvertDelta(fromEvent) {
+    return this.options.events.some(rule => fromEvent.type.match(rule));
+  }
+}
+
+Scrollbar.use(InvertDeltaPlugin);
+
+const scrollbar = Scrollbar.init(elem, {
+  plugins: {
+    invertDelta: {
+      events: [/wheel/],
+    },
+  },
+});</pre>
+            </div>
+        </article>
+    </div>
+</body>
+
+</html>

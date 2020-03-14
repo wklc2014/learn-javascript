@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>clappr</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+        box-sizing: border-box;
+			}
+			.video-box {
+				width: 100%;
+				width: 400px;
+				height: 300px;
+        margin: 30px auto;
+			}
+
+			#player {
+				width: 100%;
+				height: 100%;
+        border: 5px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="video-box">
+			<div id="player" class="player">
+
+			</div>
+		</div>
+		<script src="./lib/clappr/v0.3.9/clappr.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/clappr/v0.3.9/plugins/clappr-playback-speed-plugin-extended.min.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <script src="./v0.3.9/plugins/clappr-titlebar-plugin.js" type="text/javascript" charset="utf-8"></script> -->
+		<script type="text/javascript">
+			var player = new Clappr.Player({
+        poster: './images/pic.jpg',
+				source: "//player.alicdn.com/video/editor.mp4?t=20000",
+        plugins: [
+          Clappr.MediaControl,
+          // ClapprTitleBarPlugin,
+          PlaybackSpeedPlugin,
+        ],
+        playbackSpeedPluginConfig: {
+          playbackSpeeds: [
+            {value: 0.25, label: '0.25x'},
+            {value: 0.5, label: '0.50x'},
+            {value: 0.75, label: '0.75x'},
+            {value: 1.0, label: '1.00x'},
+            {value: 1.5, label: '1.50x'},
+            {value: 2, label: '2.00x'},
+            {value: 3, label: '3.00x'},
+          ],
+        },
+				parentId: ".player",
+				width: '100%',
+				height: '100%',
+        // chromeless: true,
+				// autoPlay: true,
+        disableVideoTagContextMenu: true,
+				hideMediaControl: false,
+				allowUserInteraction: true,
+				playbackNotSupportedMessage: '你的浏览器不知道视频播放，请使用其他浏览器播放。',
+        mediacontrol: {
+
+        }
+			});
+		</script>
+	</body>
+</html>

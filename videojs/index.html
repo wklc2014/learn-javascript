@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>video.js 视频播放</title>
+    <link rel="stylesheet" type="text/css" href="../_assets/uikit-v3.2.2/css/uikit.min.css"/>
+  </head>
+  <body>
+    <div class="uk-container">
+      <h1>视频播放</h1>
+      <p>
+        <a href="./demo.html">查看 DEMO</a>
+      </p>
+      <h2>一、视频配置</h2>
+      <p>一般来说有三种方法来设置：</p>
+      <p>1. 写在video的html标签之中</p>
+      <pre>&lt;video id=&quot;video1&quot; class=&quot;video-js&quot; controls preauto=&quot;auto&quot; poster=&quot;a.png&quot; width=&quot;600px&quot; height: &quot;300px&quot;&gt;
+  &lt;source src=&quot;shipin.mp4&quot; type=&quot;video/mp4&quot;&gt;
+&lt;/video&gt;</pre>
+      <p>2. 写在video标签的data-setup属性中</p>
+      <p>3. 在JS代码中设置</p>
+      <pre>&lt;video id=&quot;video1&quot; class=&quot;video-js&quot; controls preauto=&quot;auto&quot; poster=&quot;a.png&quot; width=&quot;600px&quot; height: &quot;300px&quot;&gt;
+  &lt;source src=&quot;shipin.mp4&quot; type=&quot;video/mp4&quot;&gt;
+&lt;/video&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var options = {
+    controls: &#x27;control&#x27;,
+    preload: &#x27;auto&#x27;,
+    width: &#x27;856&#x27;,
+    height: &#x27;508&#x27;,
+};
+var player = videojs(&#x27;video&#x27;, options)
+&lt;/script&gt;</pre>
+      <p>videojs函数可以接受三个参数，第一个是id，第二个就是视频的配置，第三个可选参数是个函数</p>
+      <pre>var player = videojs(&#x27;video&#x27;, options, function (){
+    play.pause()
+})</pre>
+      <h2>二、videojs的参数</h2>
+      <ul>
+        <li>autoplay: true/false，播放器准备好之后，是否自动播放 【默认false】</li>
+        <li>controls : true/false 是否拥有控制条 【默认true】,如果设为false ,那么只能通过api进行控制了。也就是说界面上不会出现任何控制按钮  </li>
+        <li>height: 视频容器的高度，字符串或数字 单位像素  比如： height:300 or height:'300px' </li>
+        <li>width: 视频容器的宽度, 字符串或数字 单位像素</li>
+        <li>loop : true/false 视频播放结束后，是否循环播放</li>
+        <li>muted : true/false 是否静音 </li>
+        <li>poster: 播放前显示的视频画面，播放开始之后自动移除。通常传入一个URL</li>
+        <li>preload:预加载
+          <ul>
+            <li>'auto' 自动</li>
+            <li>’metadata' 元数据信息 ，比如视频长度，尺寸等</li>
+            <li>'none'  不预加载任何数据，直到用户开始播放才开始下载</li>
+          </ul>
+        </li>
+        <li>sources:Array 资源文件</li>
+        <li>techOrder: Array 使用哪种技术播放，可选值有'html5','flash'  默认为['html5'], 注意： 在v6.0.0 及以上的版本中，默认不包含flash的使用代码。如果要使用flash播放的，需要手动引入flash相关逻辑的代码。且需要指定swf文件的路径。
+          <pre>// 全局指定swf文件的位置
+videojs.options.flash.swf = 'video-js.swf';
+// Create a player.
+var player = videojs('example_video_1',{
+    teachOrder:['flash']
+},function(){
+    console.log(this)
+});</pre></li>
+        <li>常用的功能
+          <ul>
+            <li>1. 播放   this.play()</li>
+            <li>2. 停止   -- video没有stop方法，可以用pause 暂停获得同样的效果</li>
+            <li>3. 暂停   this.pause()</li>
+            <li>4. 销毁  this.dispose()</li>
+            <li>5. 监听  this.on('click',fn)</li>
+            <li>6. 触发事件this.trigger('dispose')</li>
+          </ul>
+        </li>
+      </ul>
+      <h2>三、视频控件/组件 【controlBar】</h2>
+      <ul>
+        <li>playToggle, //播放暂停按钮</li>
+        <li>volumeMenuButton,//音量控制</li>
+        <li>currentTimeDisplay,//当前播放时间</li>
+        <li>timeDivider, // '/' 分隔符</li>
+        <li>durationDisplay, //总时间</li>
+        <li>progressControl, //点播流时，播放进度条，seek控制</li>
+        <li>liveDisplay, //直播流时，显示LIVE</li>
+        <li>remainingTimeDisplay, //当前播放时间</li>
+        <li>playbackRateMenuButton, //播放速率，当前只有html5模式下才支持设置播放速率</li>
+        <li>fullscreenToggle //全屏控制</li>
+      </ul>
+      <p>1. 禁用控件</p>
+      <pre>var options = {
+    controls: 'control',
+    preload: 'none',
+    width: '856',
+    height: '508',
+    controlBar: {
+        volumeBar: false,
+        playToggle: false
+    }
+};</pre>
+    <p>2. 更改控件顺序</p>
+    <pre>var options = {
+    controls: 'control',
+    preload: 'none',
+    width: '856',
+    height: '508',
+    controlBar: {
+      children: [
+        { name: 'playToggle' },
+        { name: 'progressControl' },
+        { name: 'currentTimeDisplay' },
+        { name: 'timeDivider', },
+        { name: 'durationDisplay' },
+        { name: 'volumePanel', inline: false, },
+        { name: 'fullscreenToggle' },
+      ]
+    }
+};</pre>
+  <p>3. 竖直的音量面板</p>
+  <p>可以注意到，上方的代码有一个</p>
+  <pre>{ name: &#x27;volumePanel&#x27;, inline: false, }</pre>
+      <h2>四、使用问题</h2>
+      <p>1. 解决在iPhone中播放时自动全屏问题(2019.09.23)</p>
+      <p>在iPhone设备上播放视频时(微信浏览器上也会有这个问题)会自动全屏，这里的全屏并不是常规的手机横屏那种全屏，而是类似于一个modal弹窗的全屏，解决办法就是在video标签中添加playsinline="true"属性</p>
+      <pre>&lt;video
+    webkit-playsinline=&quot;true&quot;
+    playsinline=&quot;true&quot;
+    class=&quot;video-js vjs-big-play-centered vjs-fluid&quot;&gt;
+&lt;/video&gt;</pre>
+      <p>2. 去掉虚线框</p>
+      <pre>.video-js button {
+  outline: none !important;
+}</pre>
+    </div>
+  </body>
+</html>

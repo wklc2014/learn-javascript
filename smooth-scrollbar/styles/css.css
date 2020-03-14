@@ -1,0 +1,23 @@
+#inner-scrollbar {
+  max-width: 800px;
+  height: 400px;
+  border: 1px solid #ccc;
+}
+
+.my-table,
+.my-table th,
+.my-table td {
+  border: 1px solid #ddd;
+}
+
+.imageWraper {
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.imageWraper img {
+  max-width: none;
+}

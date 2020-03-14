@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>viewer.js</title>
+    <link rel="stylesheet" type="text/css" href="../_assets/uikit-v3.2.2/css/uikit.min.css" />
+  </head>
+  <body>
+    <div class="uk-container">
+      <article>
+        <h1><a id="user-content-viewerjs" class="anchor" aria-hidden="true" href="#viewerjs"></a>Viewer.js</h1>
+        <p>
+          <a href="demo.html">Demo</a>
+        </p>
+        <blockquote>
+          <p>JavaScript image viewer.</p>
+        </blockquote>
+        <ul>
+          <li><a href="https://fengyuanchen.github.io/viewerjs" rel="nofollow">Website</a></li>
+          <li><a href="https://github.com/fengyuanchen/jquery-viewer">jquery-viewer</a> - A jQuery plugin wrapper for Viewer.js.</li>
+        </ul>
+        <h2>Features</h2>
+        <ul>
+          <li>Supports 39 options</li>
+          <li>Supports 23 methods</li>
+          <li>Supports 9 events</li>
+          <li>Supports modal and inline modes</li>
+          <li>Supports touch</li>
+          <li>Supports move</li>
+          <li>Supports zoom</li>
+          <li>Supports rotation</li>
+          <li>Supports scale (flip)</li>
+          <li>Supports keyboard</li>
+          <li>Cross-browser support</li>
+        </ul>
+        <h2>Main</h2>
+        <pre lang="text"><code>dist/
+  ├── viewer.css
+  ├── viewer.min.css   (compressed)
+  ├── viewer.js        (UMD)
+  ├── viewer.min.js    (UMD, compressed)
+  ├── viewer.common.js (CommonJS, default)
+  └── viewer.esm.js    (ES Module)</code></pre>
+        <h2>Getting started</h2>
+        <h3>Installation</h3>
+        <div class="highlight highlight-source-shell">
+          <pre>npm install viewerjs</pre>
+        </div>
+        <p>In browser:</p>
+        <div class="highlight highlight-text-html-basic">
+          <pre>&lt;link  href="/path/to/viewer.css" rel="stylesheet"&gt;
+&lt;script src="/path/to/viewer.js"&gt;&lt;/script&gt;</pre>
+        </div>
+        <p>The cdnjs provides CDN support for Viewer.js's CSS and JavaScript. You can find the links <a href="https://cdnjs.com/libraries/viewerjs" rel="nofollow">here</a>.</p>
+        <h3>Usage</h3>
+        <h4>Syntax</h4>
+        <div class="highlight highlight-source-js">
+          <pre>new Viewer(element[, options])</pre>
+        </div>
+        <ul>
+          <li>
+            <p><strong>element</strong></p>
+            <ul>
+              <li>Type: <code>HTMLElement</code></li>
+              <li>The target image or container of images for viewing.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>options</strong> (optional)</p>
+            <ul>
+              <li>Type: <code>Object</code></li>
+              <li>The options for viewing. Check out the available <a href="#options">options</a>.</li>
+            </ul>
+          </li>
+        </ul>
+        <h4><a id="user-content-example" class="anchor" aria-hidden="true" href="#example"></a>Example</h4>
+        <div class="highlight highlight-text-html-basic">
+          <pre>&lt;!-- a block container is required --&gt;
+&lt;div&gt;
+  &lt;img id="image" src="picture.jpg" alt="Picture"&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+  &lt;ul id="images"&gt;
+    &lt;li&gt;&lt;img src="picture-1.jpg" alt="Picture 1"&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src="picture-2.jpg" alt="Picture 2"&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src="picture-3.jpg" alt="Picture 3"&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+        </div>
+        <div class="highlight highlight-source-js">
+          <pre>// import 'viewerjs/dist/viewer.css';
+import Viewer from 'viewerjs';
+
+// View an image
+const viewer = new Viewer(document.getElementById('image'), {
+  inline: true,
+  viewed() {
+    viewer.zoomTo(1);
+  },
+});
+
+// View a list of images
+const gallery = new Viewer(document.getElementById('images'));</pre>
+        </div>
+        <h2>Keyboard support</h2>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <ul>
+          <li><code>Esc</code>: Exit full screen or close the viewer or exit modal mode or stop play.</li>
+          <li><code>Space</code>: Stop play.</li>
+          <li><code>←</code>: View the previous image.</li>
+          <li><code>→</code>: View the next image.</li>
+          <li><code>↑</code>: Zoom in the image.</li>
+          <li><code>↓</code>: Zoom out the image.</li>
+          <li><code>Ctrl + 0</code>: Zoom out to initial size.</li>
+          <li><code>Ctrl + 1</code>: Zoom in to natural size.</li>
+        </ul>
+        <h2>Options</h2>
+        <p>You may set viewer options with <code>new Viewer(image, options)</code>.
+          If you want to change the global default options, You may use <code>Viewer.setDefaults(options)</code>.</p>
+        <ul>
+          <li>Type: <code>Boolean</code> or <code>String</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable a modal backdrop, specify <code>static</code> for a backdrop which doesn't close the modal on click.</p>
+        <h3>button</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Show the button on the top-right of the viewer.</p>
+        <h3>navbar</h3>
+        <ul>
+          <li>Type: <code>Boolean</code> or <code>Number</code></li>
+          <li>Default: <code>true</code></li>
+          <li>Options:
+            <ul>
+              <li><code>0</code> or <code>false</code>: hide the navbar</li>
+              <li><code>1</code> or <code>true</code>: show the navbar</li>
+              <li><code>2</code>: show the navbar only when the screen width is greater than 768 pixels</li>
+              <li><code>3</code>: show the navbar only when the screen width is greater than 992 pixels</li>
+              <li><code>4</code>: show the navbar only when the screen width is greater than 1200 pixels</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Specify the visibility of the navbar.</p>
+        <h3>title</h3>
+        <ul>
+          <li>Type: <code>Boolean</code> or <code>Number</code> or <code>Function</code> or <code>Array</code></li>
+          <li>Default: <code>true</code></li>
+          <li>Options:
+            <ul>
+              <li><code>0</code> or <code>false</code>: hide the title</li>
+              <li><code>1</code> or <code>true</code> or <code>Function</code> or <code>Array</code>: show the title</li>
+              <li><code>2</code>: show the title only when the screen width is greater than 768 pixels</li>
+              <li><code>3</code>: show the title only when the screen width is greater than 992 pixels</li>
+              <li><code>4</code>: show the title only when the screen width is greater than 1200 pixels</li>
+              <li><code>Function</code>: customize the title content</li>
+              <li><code>[Number, Function]</code>: the first element indicate the visibility, the second element
+                customize the
+                title content</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Specify the visibility and the content of the title.</p>
+        <blockquote>
+          <p>The name comes from the <code>alt</code> attribute of an image element or the image name parsed from URL.</p>
+        </blockquote>
+        <p>For example, <code>title: 4</code> equals to:</p>
+        <div class="highlight highlight-source-js">
+          <pre>new Viewer(image, {
+  title: [4, (image, imageData) =&gt; `${image.alt} (${imageData.naturalWidth} × ${imageData.naturalHeight})`]
+});</pre>
+        </div>
+        <h3>toolbar</h3>
+        <ul>
+          <li>Type: <code>Boolean</code> or <code>Number</code> or <code>Object</code></li>
+          <li>Default: <code>true</code></li>
+          <li>Options:
+            <ul>
+              <li><code>0</code> or <code>false</code>: hide the toolbar.</li>
+              <li><code>1</code> or <code>true</code>: show the toolbar.</li>
+              <li><code>2</code>: show the toolbar only when the screen width is greater than 768 pixels.</li>
+              <li><code>3</code>: show the toolbar only when the screen width is greater than 992 pixels.</li>
+              <li><code>4</code>: show the toolbar only when the screen width is greater than 1200 pixels.</li>
+              <li><code>{ key: Boolean | Number }</code>: show or hide the toolbar.</li>
+              <li><code>{ key: String }</code>: customize the size of the button.</li>
+              <li><code>{ key: Function }</code>: customize the click handler of the button.</li>
+              <li><code>{ key: { show: Boolean | Number, size: String, click: Function }</code>: customize each
+                property of the
+                button.</li>
+              <li>Available keys: "zoomIn", "zoomOut", "oneToOne", "reset", "prev", "play", "next", "rotateLeft",
+                "rotateRight", "flipHorizontal" and "flipVertical".</li>
+              <li>Available sizes: "small", "medium" (default) and "large".</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Specify the visibility and layout of the toolbar its buttons.</p>
+        <p>For example, <code>toolbar: 4</code> equals to:</p>
+        <div class="highlight highlight-source-js">
+          <pre>new Viewer(image, {
+  toolbar: {
+    zoomIn: 4,
+    zoomOut: 4,
+    oneToOne: 4,
+    reset: 4,
+    prev: 4,
+    play: {
+      show: 4,
+      size: 'large',
+    },
+    next: 4,
+    rotateLeft: 4,
+    rotateRight: 4,
+    flipHorizontal: 4,
+    flipVertical: 4,
+  },
+});</pre>
+        </div>
+        <h3>className</h3>
+        <ul>
+          <li>Type: <code>String</code></li>
+          <li>Default: <code>''</code></li>
+        </ul>
+        <p>Custom class name(s) to add to the viewer's root element.</p>
+        <h3>container</h3>
+        <ul>
+          <li>Type: <code>Element</code> or <code>String</code></li>
+          <li>Default: <code>'body'</code></li>
+          <li>An element or a valid selector for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector"
+              rel="nofollow">Document.querySelector</a></li>
+        </ul>
+        <p>The container to put the viewer in modal mode.</p>
+        <blockquote>
+          <p>Only available when the <code>inline</code> option is set to <code>false</code>.</p>
+        </blockquote>
+        <h3>filter</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>Filter the images for viewing (should return <code>true</code> if the image is viewable).</p>
+        <p>For example:</p>
+        <div class="highlight highlight-source-js">
+          <pre>new Viewer(image, {
+  filter(image) {
+    return image.complete;
+  },
+});</pre>
+        </div>
+        <h3>fullscreen</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable to request full screen when play.</p>
+        <blockquote>
+          <p>Requires the browser supports <a href="http://caniuse.com/fullscreen" rel="nofollow">Full Screen API</a>.</p>
+        </blockquote>
+        <h3>initialViewIndex</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>0</code></li>
+        </ul>
+        <p>Define the initial index of image for viewing.</p>
+        <blockquote>
+          <p>Also used as the default parameter value of the <code>view</code> method.</p>
+        </blockquote>
+        <h3>inline</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>false</code></li>
+        </ul>
+        <p>Enable inline mode.</p>
+        <h3>interval</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>5000</code></li>
+        </ul>
+        <p>The amount of time to delay between automatically cycling an image when playing.</p>
+        <h3>keyboard</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable keyboard support.</p>
+        <h3>loading</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Indicate if show a loading spinner when load image or not.</p>
+        <h3>loop</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Indicate if enable loop viewing or not.</p>
+        <blockquote>
+          <p>If the current image is the last one, then the next one to view is the first one, and vice versa.</p>
+        </blockquote>
+        <h3>minWidth</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: 200</li>
+        </ul>
+        <p>Define the minimum width of the viewer.</p>
+        <blockquote>
+          <p>Only available in inline mode (set the <code>inline</code> option to <code>true</code>).</p>
+        </blockquote>
+        <h3>minHeight</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: 100</li>
+        </ul>
+        <p>Define the minimum height of the viewer.</p>
+        <blockquote>
+          <p>Only available in inline mode (set the <code>inline</code> option to <code>true</code>).</p>
+        </blockquote>
+        <h3>movable</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable to move the image.</p>
+        <h3></a>zoomable</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable to zoom the image.</p>
+        <h3></a>rotatable</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable to rotate the image.</p>
+        <h3></a>scalable</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable to scale the image.</p>
+        <h3>toggleOnDblclick</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Indicate if toggle the image size between its natural size and initial size when double click on the image
+          or not.</p>
+        <p>In other words, call the <a href="#toggle"><code>toggle</code></a> method automatically when double click on
+          the
+          image.</p>
+        <blockquote>
+          <p>Requires <code>dblclick</code>
+            event support.</p>
+        </blockquote>
+        <h3></a>tooltip</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Show the tooltip with image ratio (percentage) when zoom in or zoom out.</p>
+        <h3></a>transition</h3>
+        <ul>
+          <li>Type: <code>Boolean</code></li>
+          <li>Default: <code>true</code></li>
+        </ul>
+        <p>Enable CSS3 Transition for some special elements.</p>
+        <h3></a>zIndex</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>2015</code></li>
+        </ul>
+        <p>Define the CSS <code>z-index</code> value of viewer in modal mode.</p>
+        <h3></a>zIndexInline</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>0</code></li>
+        </ul>
+        <p>Define the CSS <code>z-index</code> value of viewer in inline mode.</p>
+        <h3></a>zoomRatio</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>0.1</code></li>
+        </ul>
+        <p>Define the ratio when zoom the image by wheeling mouse.</p>
+        <h3></a>minZoomRatio</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>0.01</code></li>
+        </ul>
+        <p>Define the min ratio of the image when zoom out.</p>
+        <h3></a>maxZoomRatio</h3>
+        <ul>
+          <li>Type: <code>Number</code></li>
+          <li>Default: <code>100</code></li>
+        </ul>
+        <p>Define the max ratio of the image when zoom in.</p>
+        <h3></a>url</h3>
+        <ul>
+          <li>Type: <code>String</code> or <code>Function</code></li>
+          <li>Default: <code>'src'</code></li>
+        </ul>
+        <p>Define where to get the original image URL for viewing.</p>
+        <blockquote>
+          <p>If it is a string, it should be one of the attributes of each image element.
+            If it is a function, it should return a valid image URL.</p>
+        </blockquote>
+        <p>For example:</p>
+        <div class="highlight highlight-text-html-basic">
+          <pre>&lt;img src="picture.jpg?size=160"&gt;</pre>
+        </div>
+        <div class="highlight highlight-source-js">
+          <pre>new Viewer(image, {
+  url(image) {
+    return image.src.replace('?size=160', '');
+  },
+});</pre>
+        </div>
+        <h3></a>ready</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>ready</code> event.</p>
+        <h3></a>show</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>show</code> event.</p>
+        <h3></a>shown</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>shown</code> event.</p>
+        <h3></a>hide</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>hide</code> event.</p>
+        <h3></a>hidden</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>hidden</code> event.</p>
+        <h3></a>view</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>view</code> event.</p>
+        <h3></a>viewed</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>viewed</code> event.</p>
+        <h3></a>zoom</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>zoom</code> event.</p>
+        <h3></a>zoomed</h3>
+        <ul>
+          <li>Type: <code>Function</code></li>
+          <li>Default: <code>null</code></li>
+        </ul>
+        <p>A shortcut of the <code>zoomed</code> event.</p>
+        <h2>Methods</h2>
+        <p>All methods allow chain composition.</p>
+        <p>As there are some <strong>asynchronous</strong> processes when start the viewer, you should call a method
+          only when
+          it is available, see the following <strong>lifecycle</strong>:</p>
+        <div class="highlight highlight-source-js">
+          <pre>new Viewer(image, {
+  ready() {
+    // 2 methods are available here: "show" and "destroy".
+  },
+  shown() {
+    // 9 methods are available here: "hide", "view", "prev", "next", "play", "stop", "full", "exit" and "destroy".
+  },
+  viewed() {
+    // All methods are available here except "show".
+    this.viewer.zoomTo(1).rotateTo(180);
+  }
+});</pre>
+        </div>
+        <h3>show([immediate])</h3>
+        <ul>
+          <li><strong>immediate</strong> (optional):
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Indicates if show the viewer immediately or not.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Show the viewer.</p>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <h3></a>hide([immediate])</h3>
+        <ul>
+          <li><strong>immediate</strong> (optional):
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Indicates if hide the viewer immediately or not.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>hide the viewer.</p>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <h3></a>view([index])</h3>
+        <ul>
+          <li><strong>index</strong> (optional):
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Default: <code>0</code> (inherits from the <code>initialViewIndex</code> option)</li>
+              <li>The index of the image for viewing</li>
+            </ul>
+          </li>
+        </ul>
+        <p>View one of the images with image's index. If the viewer is not shown, will show the viewer first.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.view(1); // View the second image</pre>
+        </div>
+        <h3></a>prev([loop=false])</h3>
+        <ul>
+          <li><strong>loop</strong> (optional):
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Indicate if turn to view the last one when it is the first one at present.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>View the previous image.</p>
+        <h3></a>next([loop=false])</h3>
+        <ul>
+          <li><strong>loop</strong> (optional):
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Indicate if turn to view the first one when it is the last one at present.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>View the next image.</p>
+        <h3></a>move(offsetX[, offsetY])</h3>
+        <ul>
+          <li>
+            <p><strong>offsetX</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Moving size (px) in the horizontal direction</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>offsetY</strong> (optional):</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Moving size (px) in the vertical direction.</li>
+              <li>If not present, its default value is <code>offsetX</code></li>
+            </ul>
+          </li>
+        </ul>
+        <p>Move the image with relative offsets.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.move(1);
+viewer.move(-1, 0); // Move left
+viewer.move(1, 0);  // Move right
+viewer.move(0, -1); // Move up
+viewer.move(0, 1);  // Move down</pre>
+        </div>
+        <h3></a>moveTo(x[, y])</h3>
+        <ul>
+          <li>
+            <p><strong>x</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>The <code>left</code> value of the image</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>y</strong> (optional):</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>The <code>top</code> value of the image</li>
+              <li>If not present, its default value is <code>x</code>.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Move the image to an absolute point.</p>
+        <h3></a>zoom(ratio[,
+          hasTooltip])</h3>
+        <ul>
+          <li>
+            <p><strong>ratio</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Zoom in: requires a positive number (ratio &gt; 0)</li>
+              <li>Zoom out: requires a negative number (ratio &lt; 0)</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>hasTooltip</strong> (optional):</p>
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Show tooltip</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Zoom the image with a relative ratio</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.zoom(0.1);
+viewer.zoom(-0.1);</pre>
+        </div>
+        <h3></a>zoomTo(ratio[, hasTooltip])</h3>
+        <ul>
+          <li>
+            <p><strong>ratio</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Requires a positive number (ratio &gt; 0)</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>hasTooltip</strong> (optional):</p>
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Show tooltip</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Zoom the image to an absolute ratio.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.zoomTo(0); // Zoom to zero size (0%)
+viewer.zoomTo(1); // Zoom to natural size (100%)</pre>
+        </div>
+        <h3>rotate(degree)</h3>
+        <ul>
+          <li><strong>degree</strong>:
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Rotate right: requires a positive number (degree &gt; 0)</li>
+              <li>Rotate left: requires a negative number (degree &lt; 0)</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Rotate the image with a relative degree.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.rotate(90);
+viewer.rotate(-90);</pre>
+        </div>
+        <h3>rotateTo(degree)</h3>
+        <ul>
+          <li><strong>degree</strong>:
+            <ul>
+              <li>Type: <code>Number</code></li>
+            </ul>
+          </li>
+        </ul>
+        <p>Rotate the image to an absolute degree.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.rotateTo(0); // Reset to zero degree
+viewer.rotateTo(360); // Rotate a full round</pre>
+        </div>
+        <h3>scale(scaleX[,
+          scaleY])</h3>
+        <ul>
+          <li>
+            <p><strong>scaleX</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Default: <code>1</code></li>
+              <li>The scaling factor to apply on the abscissa of the image</li>
+              <li>When equal to <code>1</code> it does nothing.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>scaleY</strong> (optional):</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>The scaling factor to apply on the ordinate of the image</li>
+              <li>If not present, its default value is <code>scaleX</code>.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Scale the image.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.scale(-1); // Flip both horizontal and vertical
+viewer.scale(-1, 1); // Flip horizontal
+viewer.scale(1, -1); // Flip vertical</pre>
+        </div>
+        <h3>scaleX(scaleX)</h3>
+        <ul>
+          <li><strong>scaleX</strong>:
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Default: <code>1</code></li>
+              <li>The scaling factor to apply on the abscissa of the image</li>
+              <li>When equal to <code>1</code> it does nothing</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Scale the abscissa of the image.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.scaleX(-1); // Flip horizontal</pre>
+        </div>
+        <h3>scaleY(scaleY)</h3>
+        <ul>
+          <li><strong>scaleY</strong>:
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>Default: <code>1</code></li>
+              <li>The scaling factor to apply on the ordinate of the image</li>
+              <li>When equal to <code>1</code> it does nothing</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Scale the ordinate of the image.</p>
+        <div class="highlight highlight-source-js">
+          <pre>viewer.scaleY(-1); // Flip vertical</pre>
+        </div>
+        <h3>play([fullscreen])</h3>
+        <ul>
+          <li><strong>fullscreen</strong> (optional):
+            <ul>
+              <li>Type: <code>Boolean</code></li>
+              <li>Default: <code>false</code></li>
+              <li>Indicate if request fullscreen or not.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Play the images.</p>
+        <h3></a>stop()</h3>
+        <p>Stop play.</p>
+        <h3></a>full()</h3>
+        <p>Enter modal mode.</p>
+        <blockquote>
+          <p>Only available in inline mode.</p>
+        </blockquote>
+        <h3></a>exit()</h3>
+        <p>Exit modal mode.</p>
+        <blockquote>
+          <p>Only available in inline mode.</p>
+        </blockquote>
+        <h3></a>tooltip()</h3>
+        <p>Show the current ratio of the image with percentage.</p>
+        <blockquote>
+          <p>Requires the <code>tooltip</code> option set to <code>true</code>.</p>
+        </blockquote>
+        <h3></a>toggle()</h3>
+        <p>Toggle the image size between its natural size and initial size.</p>
+        <blockquote>
+          <p>Used by the <a href="#toggleOnDblclick"><code>toggleOnDblclick</code></a> option.</p>
+        </blockquote>
+        <h3></a>reset()</h3>
+        <p>Reset the image to its initial state.</p>
+        <h3></a>update()</h3>
+        <p>Update the viewer instance when the source images changed (added, removed or sorted).</p>
+        <blockquote>
+          <p>If you load images dynamically (with XMLHTTPRequest), you can use this method to add the new images to the
+            viewer
+            instance.</p>
+        </blockquote>
+        <h3></a>destroy()</h3>
+        <p>Destroy the viewer and remove the instance.</p>
+        <h2>Events</h2>
+        <p>All events can access the viewer instance with <code>this.viewer</code> in its handler.</p>
+        <blockquote>
+          <p>Be careful to use these events in other component which has the same event names, e.g.: <a href="https://getbootstrap.com/"
+              rel="nofollow">Bootstrap</a>'s modal.</p>
+        </blockquote>
+        <div class="highlight highlight-source-js">
+          <pre>let viewer;
+
+  image.addEventListener('viewed', function () {
+    console.log(this.viewer === viewer);
+    // &gt; true
+  });
+
+  viewer = new Viewer(image);</pre>
+        </div>
+        <h3>ready</h3>
+        <p>This event fires when a viewer instance is ready for viewing.</p>
+        <blockquote>
+          <p>In modal mode, this event will not be triggered until you click on one of the images.</p>
+        </blockquote>
+        <h3>show</h3>
+        <p>This event fires when the viewer modal starts to show.</p>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <h3>shown</h3>
+        <p>This event fires when the viewer modal has shown.</p>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <h3>hide</h3>
+        <p>This event fires when the viewer modal starts to hide.</p>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <h3>hidden</h3>
+        <p>This event fires when the viewer modal has hidden.</p>
+        <blockquote>
+          <p>Only available in modal mode.</p>
+        </blockquote>
+        <h3>view</h3>
+        <ul>
+          <li>
+            <p><strong>event.detail.originalImage</strong>:</p>
+            <ul>
+              <li>Type: <code>HTMLImageElement</code></li>
+              <li>The original image.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>event.detail.index</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>The index of the original image.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>event.detail.image</strong>:</p>
+            <ul>
+              <li>Type: <code>HTMLImageElement</code></li>
+              <li>The current image (a clone of the original image).</li>
+            </ul>
+          </li>
+        </ul>
+        <p>This event fires when a viewer starts to show (view) an image.</p>
+        <h3></a>viewed</h3>
+        <ul>
+          <li><strong>event.detail</strong>: the same as the <code>view</code> event.</li>
+        </ul>
+        <p>This event fires when a viewer has shown (viewed) an image.</p>
+        <h3></a>zoom</h3>
+        <ul>
+          <li>
+            <p><strong>event.detail.originalEvent</strong>:</p>
+            <ul>
+              <li>Type: <code>Event</code></li>
+              <li>Options: <code>wheel</code>, <code>touchmove</code>.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>event.detail.oldRatio</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>The old (current) ratio of the image.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>event.detail.ratio</strong>:</p>
+            <ul>
+              <li>Type: <code>Number</code></li>
+              <li>The new (next) ratio of the image (<code>imageData.width / imageData.naturalWidth</code>).</li>
+            </ul>
+          </li>
+        </ul>
+        <p>This event fires when a viewer starts to zoom (in or out) an image.</p>
+        <h3></a>zoomed</h3>
+        <ul>
+          <li><strong>event.detail</strong>: the same as the <code>zoom</code> event.</li>
+        </ul>
+        <p>This event fires when a viewer has zoomed (in or out) an image.</p>
+        <h2></a>No conflict</h2>
+        <p>If you have to use other viewer with the same namespace, just call the <code>Viewer.noConflict</code> static
+          method
+          to revert to it.</p>
+        <div class="highlight highlight-text-html-basic">
+          <pre>&lt;script src="other-viewer.js"&gt;&lt;/script&gt;
+&lt;script src="viewer.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  Viewer.noConflict();
+  // Code that uses other `Viewer` can follow here.
+&lt;/script&gt;</pre>
+        </div>
+        <h2></a>Browser
+          support</h2>
+        <ul>
+          <li>Chrome (latest)</li>
+          <li>Firefox (latest)</li>
+          <li>Safari (latest)</li>
+          <li>Opera (latest)</li>
+          <li>Edge (latest)</li>
+          <li>Internet Explorer 9+</li>
+        </ul>
+        <h2>Contributing</h2>
+        <p>Please read through our <a href="/fengyuanchen/viewerjs/blob/master/.github/CONTRIBUTING.md">contributing
+            guidelines</a>.</p>
+        <h2>Versioning</h2>
+        <p>Maintained under the <a href="https://semver.org/" rel="nofollow">Semantic Versioning guidelines</a>.</p>
+        <h2>License</h2>
+        <p><a href="https://opensource.org/licenses/MIT" rel="nofollow">MIT</a> © <a href="https://chenfengyuan.com"
+            rel="nofollow">Chen
+            Fengyuan</a></p>
+      </article>
+    </div>
+  </body>
+</html>
