@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>jquery.printArea.js</title>
+    <link rel="stylesheet" type="text/css" href="../../_assets/uikit-v3.2.2/css/uikit.min.css" />
+    <style type="text/css">
+      .box {
+        padding-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="uk-container box">
+      <button id="btn" class="uk-button uk-button-primary">Download</button>
+      <div id="capture">
+        <h2>Hello world!</h2>
+        <p>据“欧洲动态”网站近日报道，有消息人士透露，在赫尔辛基举行的欧盟财长会议文件显示，欧盟拟重启能源税改革，包括提高现行能源税最低税率，取消对空运海运部门的税收豁免等。</p>
+        <p>根据该文件，欧盟现行的能源税始于15年前，现已过时且不适应气候变化挑战及能源政策的发展。过去十年间，欧盟引领全球向可再生能源转变，建立全球最大碳排放交易体系，以减少对碳燃料的依赖，但欧盟的能源税政策未能反映出这些趋势。</p>
+        <table class="uk-table uk-table-divider uk-table-striped uk-table-hover">
+          <thead>
+            <tr>
+              <th>网站名称</th>
+              <th>网址</th>
+              <th>创建时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Amaze UI</td>
+              <td>http://amazeui.org</td>
+              <td>2012-10-01</td>
+            </tr>
+            <tr>
+              <td>Amaze UI</td>
+              <td>http://amazeui.org</td>
+              <td>2012-10-01</td>
+            </tr>
+            <tr class="am-active">
+              <td>Amaze UI(Active)</td>
+              <td>http://amazeui.org</td>
+              <td>2012-10-01</td>
+            </tr>
+            <tr>
+              <td>Amaze UI</td>
+              <td>http://amazeui.org</td>
+              <td>2012-10-01</td>
+            </tr>
+            <tr>
+              <td>Amaze UI</td>
+              <td>http://amazeui.org</td>
+              <td>2012-10-01</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <img src="image/2.jpg">
+        </p>
+        <p>
+          <img src="image/3.jpg">
+        </p>
+        <p>据了解，欧盟曾计划启动能源税改革，但因成员国难以达成共识而于2015年搁置，主要原因是东欧国家担心燃料成本上升加重支出负担，而西欧强国则勉力于利用税收豁免保护其空海运输业的全球竞争力。</p>
+        <p>
+          <img src="image/4.jpg">
+        </p>
+        <p>
+          <img src="image/1.jpg">
+        </p>
+        <p>声明：转载此文是出于传递更多信息之目的。若有来源标注错误或侵犯了您的合法权益，请作者持权属证明与本网联系，我们将及时更正、删除，谢谢。</p>
+      </div>
+    </div>
+    <script src="../../_assets/jquery/v3.4.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/jquery.printArea/v2.4.0/jquery.PrintArea.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('#btn').click(function() {
+          $("#capture").printArea({});
+        })
+      })
+    </script>
+  </body>
+</html>
