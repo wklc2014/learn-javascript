@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>jquery.mobile</title>
+  <link rel="stylesheet" href="../dist/jquery.mobile-1.4.5.css">
+  <script src="../dist/jquery-v2.0.1.min.js"></script>
+  <script src="../dist/jquery.mobile-1.4.5.js"></script>
+</head>
+<body>
+<div data-role="page" id="home" data-theme="m">
+  <div data-role="header" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#home" class="ui-btn-active">Home</a></li>
+        <li><a href="#pageA">pageA</a></li>
+        <li><a href="#pageB">pageB</a></li>
+      </ul>
+    </div>
+  </div>
+  <div data-role="content">
+    <h2>Home</h2>
+    <p>
+      <a href="#pageA">Help</a>
+    </p>
+    <p>
+      <a href="news.html">News</a>
+    </p>
+    <div data-role="collapsible">
+      <h1>点击我 - 我可以折叠！</h1>
+      <p>我是可折叠的内容。</p>
+    </div>
+  </div>
+  <div data-role="footer" data-position="fixed">
+    <h1>页脚文本</h1>
+  </div>
+</div>
+
+<div data-role="page" id="pageA">
+  <div data-role="content">
+    <h2>pageA</h2>
+    <p>
+      <a href="#home">Home</a>
+    </p>
+  </div>
+</div>
+
+<div data-role="page" id="pageB">
+  <div data-role="content">
+    <h2>pageB</h2>
+    <p>
+      <a href="#home">Home</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
