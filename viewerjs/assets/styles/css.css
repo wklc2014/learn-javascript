@@ -1,0 +1,16 @@
+.my-box-ul {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.my-box-ul > li {
+  list-style: none;
+  padding: 0 5px 10px 5px;
+  width: 200px;
+  height: 200px;
+}
+.my-box-ul > li > img {
+  width: 100%;
+  height: 100%;
+}

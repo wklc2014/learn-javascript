@@ -1,0 +1,35 @@
+.my-box {
+  padding-top: 16px;
+}
+
+.my-box-ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.my-box-ul > li {
+  list-style: none;
+  flex: 1 1 25%;
+  line-height: 0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.my-box-ul > li img {
+  max-width: 100%;
+}
+
+.my-textarea {
+  box-sizing: border-box;
+  font-size: 0.9em;
+  padding: 8px 0;
+  line-height: 1;
+  resize: none;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+  outline: none;
+}
