@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 20px;
+    font-size: 12px;
+}
+
+#app {
+    background: #eee;
+    width: 800px;
+    height: 700px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    box-sizing: content-box;
+}
+
+.btn {
+    list-style: none;
+    height: 30px;
+}
+
+.btn li {
+    list-style: none;
+    float: left;
+    line-height: 30px;
+    padding: 0 16px;
+    background: #eee;
+    border: 1px solid #ddd;
+    margin-right: 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}

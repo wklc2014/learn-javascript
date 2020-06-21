@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>zrender</title>
+    <link rel="stylesheet" href="assets/styles/css.css">
+</head>
+
+<body>
+    <div id="app">
+    </div>
+    <ul class="btn">
+        <li data-type="out">放大</li>
+        <li data-type="in">缩小</li>
+        <li data-type="full">1:1</li>
+        <li data-type="origin">自适应</li>
+    </ul>
+    <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
+    <script src="./lib/zrender/v4.3.1/zrender.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./assets/scripts/data.js"></script>
+    <script src="./assets/scripts/imageDetail.js"></script>
+    <script>
+    var img = new Image();
+    img.src = 'assets/images/view.png';
+    img.onload = function() {
+        var imageDetail = new ImageDetail({
+            app: 'app',
+            width: 800,
+            height: 700,
+            image: img,
+            defect: DEFECT_INFOS,
+            defectConfig: {},
+            legend: LEGEND_INFOS,
+        });
+    }
+
+    $(function() {
+        $('.btn').on('click', 'li', function(e) {
+            var type = $(this).data('type');
+            if (type === 'out') {
+                operateZoom(groupView, 'out');
+            } else if (type === 'in') {
+                operateZoom(groupView, 'in');
+            } else if (type === 'view') {
+                // operateView(groupView, dataImageView);
+            } else if (type === 'origin') {
+                operateOrign(groupView);
+            }
+        })
+    })
+    </script>
+</body>
+
+</html>
