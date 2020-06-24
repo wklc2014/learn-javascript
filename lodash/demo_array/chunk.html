@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>数组拆分</title>
+    <script src="../lib/lodash/v4.17.15/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../_assets/jquery/v3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <p>分隔数组</p>
+    <p>每 n 个元素拆分成一个块，所有块组合成一个新数组</p>
+    <pre>
+      _.chunk(array, [size=1]);
+    </pre>
+    <script type="text/javascript">
+      $(function() {
+        var array = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'];
+        var a = _.chunk(array, 3);
+        console.log('a>>>', a);
+        console.log('array>>>', array);
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>zrender</title>
+    <style>
+        * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="zrender.min.js"></script>
+    <script type="text/javascript">
+    var oApp = document.getElementById('app');
+    var zr = zrender.init(oApp, {
+        width: 800,
+        height: 700
+    });
+    var circle = new zrender.Circle({
+        draggable: true,
+        shape: {
+            cx: 150,
+            cy: 50,
+            r: 40
+        },
+        style: {
+            fill: 'none',
+            stroke: '#F00'
+        }
+    });
+    zr.add(circle);
+    </script>
+</body>
+
+</html>

@@ -10,7 +10,7 @@ body {
 }
 
 #app {
-    background: #eee;
+    /*background: #eee;*/
     width: 800px;
     height: 700px;
     margin: 0 auto;

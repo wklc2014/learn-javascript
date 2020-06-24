@@ -15,39 +15,38 @@
     <ul class="btn">
         <li data-type="out">放大</li>
         <li data-type="in">缩小</li>
-        <li data-type="view">1:1</li>
+        <li data-type="full">1:1</li>
         <li data-type="origin">自适应</li>
     </ul>
     <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
     <script src="./lib/zrender/v4.3.1/zrender.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./assets/scripts/data.js"></script>
-    <script src="./assets/js/imageDetail.js"></script>
+    <script src="assets/js/zrender.util.js"></script>
     <script>
+
+    var start = async function() {
+        var oApp = document.getElementById('app');
+        var APP_WIDTH = 800;
+        var APP_HEIGHT = 700;
+        var zr = new zrender.init(oApp, { width: APP_WIDTH, height: APP_HEIGHT });
+
+        var imgNode = await cImageNode('assets/images/lower.jpg', {});
+        console.log('imgNode>>>', imgNode);
+        zr.add(imgNode);
+    }
+
+    start();
+
     $(function() {
-        var imageDetail = new ImageDetail({
-            app: 'app',
-            width: 800,
-            height: 700,
-            image: 'assets/images/view.png',
-            defect: {
-                data: DEFECT_INFOS,
-            },
-            legend: LEGEND_INFOS,
-            thumb: {
-                width: 400,
-                height: 400,
-            }
-        });
         $('.btn').on('click', 'li', function(e) {
             var type = $(this).data('type');
             if (type === 'out') {
-                imageDetail.operate('zoomout');
+                operateZoom(groupView, 'out');
             } else if (type === 'in') {
-                imageDetail.operate('zoomin');
+                operateZoom(groupView, 'in');
             } else if (type === 'view') {
-                imageDetail.operate('view');
+                // operateView(groupView, dataImageView);
             } else if (type === 'origin') {
-                imageDetail.operate('origin');
+                operateOrign(groupView);
             }
         })
     })

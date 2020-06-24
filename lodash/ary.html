@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>_.ary</title>
+    <script src="./lib/lodash/v4.17.15/lodash.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <button id="add">add</button>
+    <script type="text/javascript">
+      $(function() {
+
+          function func(a, b) {
+            var arr = arguments;
+            console.log(arr);
+          }
+
+          func.length = 2;
+
+          func(1, 2, 3, 4)
+
+          var t = _.ary(func);
+
+          t(1, 2, 3, 4, 5);
+      })
+    </script>
+  </body>
+</html>

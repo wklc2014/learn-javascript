@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>_.bind</title>
+    <script src="./lib/lodash/v4.17.15/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <button id="add">add</button>
+    <script type="text/javascript">
+      $(function() {
+        function func(a, b, c) {
+          console.log(this.name + '>>>' + a + '|||' + b + '|||' + c);
+        }
+        var user = {
+          name: '成都',
+        }
+        var t = _.bind(func, user, _, '眉山');
+        var r = _.bind(func, user, _, _, '眉山');
+        var s = _.bind(func, user, '眉山');
+        t('绵阳', '乐山');
+        r('绵阳', '乐山');
+        s('绵阳', '乐山');
+      })
+    </script>
+  </body>
+</html>

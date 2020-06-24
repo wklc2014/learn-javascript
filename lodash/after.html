@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>_.after</title>
+    <script src="./lib/lodash/v4.17.15/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <button id="add">add</button>
+    <script type="text/javascript">
+      function func(size = 0) {
+
+        return size;
+      }
+
+      const t = _.after(4, func);
+
+      const s = _.after(3, t);
+
+      $(function() {
+        var time_s = 0;
+        var time_t = 0;
+        $('#add').on('click', function(){
+          time_s ++;
+          console.log('执行' + time_s + '次 s 方法');
+          if (time_s >= 3) {
+            time_t ++;
+            console.log('执行' + time_t + '次 t 方法');
+          }
+          if (time_t >= 2) {
+            console.info('开始执行 func 函数');
+          }
+          var result = t();
+        })
+
+      })
+    </script>
+  </body>
+</html>

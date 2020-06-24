@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>合并数组</title>
+    <script src="../lib/lodash/v4.17.15/lodash.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../_assets/jquery/v3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <p>合并数组或值</p>
+    <pre>_.concat(array, [values])</pre>
+    <script type="text/javascript">
+      $(function() {
+        var a = ['a', 'b'];
+        var b = _.concat(a, ['c', 'd'], 1, 2, [['e']]);
+        console.log('a>>>', a);
+        console.log('b>>>', b);
+      })
+    </script>
+    4 + 6 + 17 + 7 + 4 + 3
+  </body>
+</html>
