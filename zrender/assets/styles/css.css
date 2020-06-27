@@ -10,12 +10,13 @@ body {
 }
 
 #app {
-    /*background: #eee;*/
+    background: #eee;
     width: 800px;
     height: 700px;
     margin: 0 auto;
     border: 1px solid #ddd;
     box-sizing: content-box;
+    margin-bottom: 32px;
 }
 
 .btn {
