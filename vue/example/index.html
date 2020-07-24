@@ -5,15 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>vue</title>
   <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script src="js/title.js"></script>
   <link rel="stylesheet" href="">
 </head>
 <body>
-  <div id="app">{{ message }}</div>
+  <div id="app">
+    <my-title text="{title}"></my-title>
+    <my-header></my-header>
+  </div>
   <script>
     var app = new Vue({
       el: "#app",
+      components: {
+        'my-header': MyHeader,
+      },
       data: {
-        message: "Hello Vue"
+        message: "Hello Vue",
+        title: '我是一个默认标题1'
       }
     })
   </script>

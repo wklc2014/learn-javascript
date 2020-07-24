@@ -10,8 +10,7 @@
 </head>
 
 <body>
-    <div id="app">
-    </div>
+    <div id="app"></div>
     <ul class="btn">
         <li data-type="out">放大</li>
         <li data-type="in">缩小</li>
@@ -21,23 +20,23 @@
     <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
     <script src="./lib/zrender/v4.3.1/zrender.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="./assets/scripts/data.js"></script>
-    <script src="./assets/js/imageDetail.js"></script>
+    <script src="./assets/scripts/imageDetail.js"></script>
     <script>
     $(function() {
         var imageDetail = new ImageDetail({
             app: 'app',
-            width: 800,
-            height: 700,
+            // image: 'assets/images/lyf.jpg',
             image: 'assets/images/view.png',
             defect: {
                 data: DEFECT_INFOS,
             },
             legend: LEGEND_INFOS,
-            thumb: {
-                width: 400,
-                height: 400,
+            map: {
+                // width: 400,
+                // height: 400,
             }
         });
+        window.a = imageDetail;
         $('.btn').on('click', 'li', function(e) {
             var type = $(this).data('type');
             if (type === 'out') {

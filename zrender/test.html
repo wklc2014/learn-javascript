@@ -15,7 +15,7 @@
     <ul class="btn">
         <li data-type="out">放大</li>
         <li data-type="in">缩小</li>
-        <li data-type="full">1:1</li>
+        <li data-type="view">1:1</li>
         <li data-type="origin">自适应</li>
     </ul>
     <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
@@ -29,26 +29,51 @@
         var APP_HEIGHT = 700;
         var zr = new zrender.init(oApp, { width: APP_WIDTH, height: APP_HEIGHT });
 
-        var imgNode = await cImageNode('assets/images/lower.jpg', {});
-        console.log('imgNode>>>', imgNode);
-        zr.add(imgNode);
-    }
+        var rect = cRect({
+            shape: {
+                x: 0,
+                y: 0,
+                width: 400,
+                height: 300,
+            },
+            style: {
+                lineWidth: 10,
+            },
+            draggable: true,
+        });
 
-    start();
+        var group = cGroup({
+            position: [100, 100],
+        });
 
-    $(function() {
+        var block = cRect({
+            shape: {
+                x: 10,
+                y: 10,
+                width: 100,
+                height: 120,
+            },
+            style: {
+                fill: '#ff0',
+                stroke: 'none',
+            },
+            draggable: true,
+        });
+
+        new Drag(block, group);
+
+        zr.add(group);
+        group.add(rect);
+        group.add(block);
+
         $('.btn').on('click', 'li', function(e) {
             var type = $(this).data('type');
-            if (type === 'out') {
-                operateZoom(groupView, 'out');
-            } else if (type === 'in') {
-                operateZoom(groupView, 'in');
-            } else if (type === 'view') {
-                // operateView(groupView, dataImageView);
-            } else if (type === 'origin') {
-                operateOrign(groupView);
-            }
+            console.log('zr>>>', zr);
+            console.log('block>>>', block);
         })
+    }
+    $(function() {
+        start();
     })
     </script>
 </body>

@@ -35,3 +35,71 @@ body {
     border-radius: 3px;
     cursor: pointer;
 }
+
+.zrender-detail-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 240px;
+    height: 34px;
+    background: #fff;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    padding: 5px;
+}
+
+.zrender-detail-control-zoomIn,
+.zrender-detail-control-zoomOut,
+.zrender-detail-control-zoomValue,
+.zrender-detail-control-zoomDrag {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zrender-detail-control-zoomIn,
+.zrender-detail-control-zoomOut {
+    flex: 0 0 24px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.zrender-detail-control-zoomIn:hover,
+.zrender-detail-control-zoomIn:active,
+.zrender-detail-control-zoomOut:hover,
+.zrender-detail-control-zoomOut:active {
+    /*background: #eed5cd;*/
+}
+
+.zrender-detail-control-zoomIn {
+    margin-right: 5px;
+}
+
+.zrender-detail-control-zoomValue {
+    flex: 0 0 40px;
+    border: 1px solid #ddd;
+    margin-right: 5px;
+}
+
+.zrender-detail-control-zoomProgress {
+    margin-right: 5px;
+    height: 5px;
+    flex: 1 1 100%;
+    background: #ddd;
+    position: relative;
+}
+.zrender-detail-control-zoomDrag {
+    background: #aaa;
+    width: 8px;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    top: -7px;
+    cursor: pointer;
+}

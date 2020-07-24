@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>echarts</title>
+    <link rel="stylesheet" href="assets/styles/css.css">
+</head>
+
+<body>
+    <div class="imageBox">
+        <div id="big"></div>
+    </div>
+    <script src="../_assets/jquery/v3.4.1/jquery.min.js"></script>
+    <script src="assets/scripts/nodes.js"></script>
+    <script src="assets/scripts/links.js"></script>
+    <script src="assets/scripts/category.js"></script>
+    <script src="assets/scripts/utils.js"></script>
+    <script src="./lib/echarts/v4.8.0/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+    var myEcharts = echarts.init(document.getElementById('big'));
+    var series = {
+        nodeScaleRatio: 1,
+        zoom: 2,
+        layout: "none",
+        roam: true,
+        type: 'graph',
+        label: {
+            show: true,
+        },
+        hoverAnimation: false,
+        nodes: [],
+        links: [],
+        categories: CATEGORYS,
+    };
+    NODES.forEach(function(v) {
+        var label = v.label || {};
+        var categoryConfig = getCategory(v.category);
+        series.nodes.push({
+            id: v.id,
+            name: v.name,
+            label: getLabel(v),
+            itemStyle: {
+                color: categoryConfig.color || '#fff',
+                borderColor: categoryConfig.mainColor || '#000',
+                borderWidth: 4,
+            },
+            symbol: getSymbol(v),
+            symbolSize: 8,
+            x: v.x,
+            y: v.y,
+            emphasis: false,
+            category: categoryConfig.name,
+        });
+    })
+    LINKS.forEach(function(v) {
+        var lineStyle = v.lineStyle || {};
+        var categoryConfig = getCategory(v.category);
+        series.links.push({
+            id: v.id,
+            source: v.source,
+            target: v.target,
+            lineStyle: {
+                opacity: 1,
+                curveness: lineStyle.curveness || 0,
+                color: categoryConfig.mainColor || '#000',
+                width: 5,
+            },
+        });
+    })
+    var options = {
+        title: {
+            show: true,
+            text: 'subway',
+            left: '10',
+            top: 10,
+        },
+        series: series,
+        tooltip: {
+            show: true,
+            formatter: function(params) {
+                var dataType = params.dataType;
+                var config = params.data.config || {};
+                if (config.type === 'lineName' || config.type === 'empty') return '';
+                if (dataType === 'node') {
+                    return '<div>' + params.data.category + '：' + params.data.name + '</div>';
+                }
+            }
+        },
+    }
+    myEcharts.setOption(options);
+    myEcharts.on('mousewheel', function () {
+        console.log('1>>>', 1);
+    });
+    </script>
+</body>
+
+</html>
