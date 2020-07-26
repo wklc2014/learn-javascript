@@ -4,24 +4,52 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>vue</title>
-  <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script src="../lib/vue/v2.6.11/vue.min.js"></script>
   <script src="js/title.js"></script>
   <link rel="stylesheet" href="">
 </head>
 <body>
   <div id="app">
-    <my-title text="{title}"></my-title>
-    <my-header></my-header>
+    <!-- <my-title
+      :text="message"
+      v-bind="obj"
+      class="parent-class"
+      style="color: #f00;"
+      placeholder="自定义placeholder"
+    ></my-title> -->
+    <div>
+      <h2>1:</h2>
+      <my-base-input v-on:input="myFocus" v-bind:value="message"></my-base-input>
+    </div>
+    <div>
+      <h2>2:</h2>
+      <input v-model:value="message" />
+    </div>
+    <div>
+      {{message}}
+    </div>
   </div>
   <script>
     var app = new Vue({
       el: "#app",
       components: {
-        'my-header': MyHeader,
+        'my-title': MyTitle,
+        'my-base-input': MyBaseInput,
+      },
+      methods: {
+        myFocus: function(value) {
+          console.log('1>>>', value);
+          this.message = value;
+        },
       },
       data: {
-        message: "Hello Vue",
-        title: '我是一个默认标题1'
+        message: "",
+        title: '我是一个默认标题1',
+        obj: {
+          id: 'u45',
+          name: '王坤',
+          city: '成都',
+        }
       }
     })
   </script>
