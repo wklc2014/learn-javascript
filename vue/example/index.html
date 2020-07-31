@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>vue</title>
-  <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+  <script src="../lib/vue/v2.6.11/vue.min.js"></script>
   <script src="js/title.js"></script>
   <link rel="stylesheet" href="">
 </head>
@@ -17,11 +17,23 @@
     var app = new Vue({
       el: "#app",
       components: {
-        'my-header': MyHeader,
+        'my-title': MyTitle,
+        'my-base-input': MyBaseInput,
+      },
+      methods: {
+        myFocus: function(value) {
+          console.log('1>>>', value);
+          this.message = value;
+        },
       },
       data: {
-        message: "Hello Vue",
-        title: '我是一个默认标题1'
+        message: "",
+        title: '我是一个默认标题1',
+        obj: {
+          id: 'u45',
+          name: '王坤',
+          city: '成都',
+        }
       }
     })
   </script>
